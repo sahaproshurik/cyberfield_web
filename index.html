@@ -3,29 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CyberField NeT — Онлайн-курси IT-професій</title>
+  <title>CyberField NeT — Онлайн-курси IT-профессій</title>
 
-  <!-- CSS: порядок важливий -->
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/sections.css" />
+  <!-- [CHANGE] Додано Google Fonts: Volkhov (заголовки), Poppins (body), Inter (UI-кнопки) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/variables.css" />
+  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/base.css" />
+  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/layout.css" />
+  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/components.css" />
+  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/sections.css" />
 </head>
 
 <body>
-  <!-- NAV -->
+
+  <!-- ═══════════════════════════════════════════════
+       NAV — без змін у розмітці, оновлено стилі
+       ═══════════════════════════════════════════════ -->
   <header class="nav" id="top">
     <div class="container">
       <div class="navRow">
+
         <a class="brand" href="#top" aria-label="CyberField NeT">
           <div class="brandLogo">
-            <!-- поклади свій логотип сюди -->
-            <img src="assets/images/logo.png" alt="CyberField NeT logo">
+            <!-- [CHANGE] Inline SVG-логотип замість img -->
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <path d="M22 4L38 13V31L22 40L6 31V13L22 4Z" fill="#6c5ce7" opacity=".85"/>
+              <path d="M22 12L32 18V30L22 36L12 30V18L22 12Z" fill="#00C3D0" opacity=".7"/>
+              <path d="M22 20L27 23V29L22 32L17 29V23L22 20Z" fill="white"/>
+            </svg>
           </div>
           <div class="brandName">
             <strong>CyberField NeT</strong>
-            <span>Онлайн-курси IT-професій</span>
+            <span>Онлайн-курси IT-профессій</span>
           </div>
         </a>
 
@@ -36,72 +48,359 @@
         </nav>
 
         <div class="navActions">
-          <a class="btn btn-outline" href="#login">Увійти</a>
           <a class="btn btn-outline" href="#register">Реєстрація</a>
-
-          <button class="lang" type="button" aria-label="Language">
+          <button class="lang" type="button" aria-label="Змінити мову">
             EN <span class="chev" aria-hidden="true">▾</span>
           </button>
         </div>
+
+        <!-- [CHANGE] Мобільний бургер-тогл -->
+        <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
       </div>
     </div>
   </header>
 
   <main>
-    <!-- HERO (заглушка, якщо це робить інша людина) -->
-    <section class="hero placeholder" aria-label="Hero">
-      <div class="heroBg" aria-hidden="true"></div>
-      <div class="container heroCard">
-        <div class="placeholderBox">
-          <h2 class="placeholderTitle">HERO (заглушка)</h2>
-          <p class="placeholderText">Тут буде перший екран (логіка/контент від іншого учасника).</p>
+
+    <!-- ═══════════════════════════════════════════════
+         HERO  — [CHANGE] Повна заміна заглушки реальним контентом
+         ═══════════════════════════════════════════════ -->
+    <section class="hero" id="hero" aria-label="Головний банер">
+      <!-- Фіолетовий blob праворуч (Figma: #DBDAFF, 766×872px) -->
+      <div class="heroBlobRight" aria-hidden="true"></div>
+      <!-- Фіолетовий glare ліворуч знизу (Figma: Ellipse 8, #6155F5 blur) -->
+      <div class="heroBlobLeft"  aria-hidden="true"></div>
+
+      <div class="container heroContent">
+        <div class="heroText">
+          <!-- Figma: Poppins 700 20px uppercase #5153DF -->
+          <p class="heroTagline">СТАРТУЙ У IT З БУДЬ-ЯКОГО РІВНЯ</p>
+
+          <!-- Figma: Volkhov 700 84px letter-spacing -0.04em #181E4B -->
+          <h1 class="heroHeading">Онлайн-курси</h1>
+
+          <!-- Figma: Poppins 500 18px lh 30px #444866 -->
+          <p class="heroDesc">
+            З нуля до першої роботи в IT.<br>
+            Навчайся практично, з реальними проєктами,
+            менторською підтримкою та сучасними технологіями.
+          </p>
+
+          <!-- Figma: btn #9A82DB, border-radius 10px, shadow 0 20px 35px rgba(128,0,255,.15) -->
+          <a class="btn btn-primary heroBtn" href="#courses">
+            Бронювання
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Figma: ChatGPT Image cyber illustration 765×764 -->
+        <div class="heroImage" aria-hidden="true">
+          <img
+            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=720&q=85&auto=format&fit=crop"
+            alt="Кіберпростір — ілюстрація"
+            loading="eager"
+          >
         </div>
       </div>
     </section>
 
-    <!-- WHY (заглушка) -->
-    <section class="section placeholder" id="why" aria-label="Why us">
-      <div class="dots" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         WHY — [CHANGE] Заглушка → 4 карточки + ілюстрація
+         ═══════════════════════════════════════════════ -->
+    <section class="section whySection" id="why" aria-labelledby="whyTitle">
+      <!-- Figma: dot-grid decoration top-right -->
+      <div class="dotsDecor dotsDecorTR" aria-hidden="true"></div>
+
       <div class="container">
-        <div class="placeholderBox">
-          <h2 class="placeholderTitle">Чому CyberField NeT (заглушка)</h2>
-          <p class="placeholderText">Тут буде блок “Чому ми” + картки.</p>
+        <!-- Figma: Volkhov 700 50px #14183E -->
+        <h2 class="title" id="whyTitle">Чому CyberField NeT</h2>
+
+        <div class="whyLayout">
+          <!-- 4 карточки 2×2 -->
+          <div class="whyGrid">
+
+            <!-- Figma: карточка #F5F0FF, radius 16, icon top-right -->
+            <article class="whyCard">
+              <div class="whyCardBody">
+                <h3>Реальні кейси</h3>
+                <p>Працюєш з задачами, як у справжній команді.</p>
+              </div>
+              <div class="whyCardIcon" aria-hidden="true">
+                <svg width="48" height="56" viewBox="0 0 48 56" fill="none">
+                  <rect x="6" y="6" width="36" height="44" rx="5" stroke="#5E6282" stroke-width="2"/>
+                  <line x1="13" y1="18" x2="35" y2="18" stroke="#5E6282" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="13" y1="26" x2="35" y2="26" stroke="#5E6282" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="13" y1="34" x2="25" y2="34" stroke="#5E6282" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </article>
+
+            <article class="whyCard">
+              <div class="whyCardBody">
+                <h3>Фокус на результат</h3>
+                <p>Готуємо до реальної роботи, не сертифікатів.</p>
+              </div>
+              <div class="whyCardIcon" aria-hidden="true">
+                <svg width="54" height="62" viewBox="0 0 54 62" fill="none">
+                  <circle cx="27" cy="20" r="13" stroke="#5E6282" stroke-width="2"/>
+                  <path d="M20 36L12 54H42L34 36" stroke="#5E6282" stroke-width="2" stroke-linejoin="round"/>
+                  <line x1="27" y1="33" x2="27" y2="54" stroke="#5E6282" stroke-width="2"/>
+                </svg>
+              </div>
+            </article>
+
+            <article class="whyCard">
+              <div class="whyCardBody">
+                <h3>IT-ментори</h3>
+                <p>Підтримка від практикуючих спеціалістів.</p>
+              </div>
+              <div class="whyCardIcon" aria-hidden="true">
+                <svg width="62" height="58" viewBox="0 0 62 58" fill="none">
+                  <rect x="6" y="8" width="50" height="34" rx="5" stroke="#5E6282" stroke-width="2"/>
+                  <line x1="31" y1="42" x2="31" y2="52" stroke="#5E6282" stroke-width="2"/>
+                  <line x1="18" y1="52" x2="44" y2="52" stroke="#5E6282" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </article>
+
+            <article class="whyCard">
+              <div class="whyCardBody">
+                <h3>Навчайся по-своєму</h3>
+                <p>Онлайн, у своєму темпі.</p>
+              </div>
+              <div class="whyCardIcon" aria-hidden="true">
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+                  <circle cx="27" cy="27" r="20" stroke="#5E6282" stroke-width="2"/>
+                  <polyline points="27,14 27,27 36,33"
+                            stroke="#5E6282" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Figma: ChatGPT Image 28 — абстрактна ілюстрація людини праворуч -->
+          <div class="whyIllustration" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=420&q=80&auto=format&fit=crop&crop=top"
+              alt=""
+            >
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- HOW (заглушка) -->
-    <section class="section placeholder" id="how" aria-label="How learning works">
-      <div class="dots" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         HOW — [CHANGE] Заглушка → 5 рядків + декор-іконки
+         ═══════════════════════════════════════════════ -->
+    <section class="section howSection" id="how" aria-labelledby="howTitle">
+      <div class="dotsDecor dotsDecorTR" aria-hidden="true"></div>
+
+      <!-- Figma: floating decorative shapes (opacity 0.4, drop-shadow) -->
+      <span class="floatIcon fi1" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="3" stroke="#6750A4" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="floatIcon fi2" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#00C3D0" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="floatIcon fi3" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="4" width="24" height="24" rx="4" stroke="#6750A4" stroke-width="2"/>
+          <line x1="4" y1="16" x2="28" y2="16" stroke="#6750A4" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="floatIcon fi4" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3L21 19H3L12 3Z" stroke="#6750A4" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="floatIcon fi5" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="16" stroke="#0088FF" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="floatIcon fi6" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="6" width="18" height="13" rx="2" stroke="#6750A4" stroke-width="2"/>
+          <line x1="8" y1="4" x2="8" y2="8" stroke="#6750A4" stroke-width="2" stroke-linecap="round"/>
+          <line x1="16" y1="4" x2="16" y2="8" stroke="#6750A4" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+
       <div class="container">
-        <div class="placeholderBox">
-          <h2 class="placeholderTitle">Як проходить навчання (заглушка)</h2>
-          <p class="placeholderText">Тут буде список етапів.</p>
+        <!-- Figma: Volkhov 700 50px #181E4B -->
+        <h2 class="title" id="howTitle">Як проходить навчання</h2>
+        <!-- Figma: Poppins 600 18px #5E6282 -->
+        <p class="subtitle">Простий шлях від старту до першої роботи в IT</p>
+
+        <!-- Figma: white card, border 2px #4F378B, shadow -4px 10px 10px #D0BCFF, radius 16px -->
+        <div class="howCard">
+
+          <article class="howRow">
+            <span class="howIconPlus" aria-hidden="true">+</span>
+            <div class="howRowBody">
+              <!-- Figma: Volkhov 700 25px #181E4B -->
+              <h3>Вступ та основи</h3>
+              <!-- Figma: Poppins 500 18px #444866 -->
+              <p>Починаєш з нуля без стресу та перевантаження.</p>
+            </div>
+          </article>
+          <hr class="howDivider" aria-hidden="true">
+
+          <article class="howRow">
+            <span class="howIconPlus" aria-hidden="true">+</span>
+            <div class="howRowBody">
+              <h3>Навчання + практика</h3>
+              <p>Відео, завдання, міні-проєкти, з перевіркою рішень.</p>
+            </div>
+          </article>
+          <hr class="howDivider" aria-hidden="true">
+
+          <article class="howRow">
+            <span class="howIconPlus" aria-hidden="true">+</span>
+            <div class="howRowBody">
+              <h3>Реальні проєкти</h3>
+              <p>Працюєш над кейсами, які можна додати в портфоліо.</p>
+            </div>
+          </article>
+          <hr class="howDivider" aria-hidden="true">
+
+          <article class="howRow">
+            <span class="howIconPlus" aria-hidden="true">+</span>
+            <div class="howRowBody">
+              <h3>Підготовка до роботи</h3>
+              <p>Резюме, співбесіди та кар'єрні поради від менторів.</p>
+            </div>
+          </article>
+          <hr class="howDivider" aria-hidden="true">
+
+          <!-- Figma: остання стрічка — іконка-галочка (check), колір #6155F5 -->
+          <article class="howRow howRowFinal">
+            <span class="howIconCheck" aria-hidden="true">✓</span>
+            <div class="howRowBody">
+              <h3>Перші офери</h3>
+              <p>Ти готовий(-а) до виходу на ринок.</p>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <!-- WHO FITS (заглушка) -->
-    <section class="section placeholder" id="who" aria-label="Who fits">
-      <div class="dots" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         WHO FITS — [CHANGE] Заглушка → 4 картки 2×2
+         ═══════════════════════════════════════════════ -->
+    <section class="section whoSection" id="who" aria-labelledby="whoTitle">
+      <!-- Figma: decor blob ліворуч знизу #CFBDFE opacity .8 blur 100px -->
+      <div class="whoDecorBlob" aria-hidden="true"></div>
+
       <div class="container">
-        <div class="placeholderBox">
-          <h2 class="placeholderTitle">Кому підходить (заглушка)</h2>
-          <p class="placeholderText">Тут буде 4 карточки з іконками.</p>
+        <!-- Figma: Volkhov 700 50px #181E4B -->
+        <h2 class="title" id="whoTitle">Кому підходить навчання</h2>
+        <!-- Figma: Poppins 600 18px #5E6282 -->
+        <p class="subtitle">Обери формат і напрям — ми підлаштуємо навчання під твій ритм.</p>
+
+        <!-- Figma: 2×2 grid, cards 475×200px #F4EFFF shadow radius 16 -->
+        <div class="whoGrid">
+
+          <article class="whoCard">
+            <!-- Figma: icon ~130×107, 3D ілюстрація -->
+            <div class="whoIcon whoIcon--student" aria-hidden="true">🎓</div>
+            <div class="whoBody">
+              <h3>Студентам</h3>
+              <p>Отримай практичну професію ще під час навчання.</p>
+            </div>
+          </article>
+
+          <article class="whoCard">
+            <div class="whoIcon whoIcon--switcher" aria-hidden="true">🔄</div>
+            <div class="whoBody">
+              <h3>Світчерам</h3>
+              <p>Зміни сферу та увійди в IT з нуля без хаосу.</p>
+            </div>
+          </article>
+
+          <article class="whoCard">
+            <div class="whoIcon whoIcon--worker" aria-hidden="true">💼</div>
+            <div class="whoBody">
+              <h3>Тим, хто працює</h3>
+              <p>Гнучкий графік і навчання у зручний час.</p>
+            </div>
+          </article>
+
+          <article class="whoCard">
+            <div class="whoIcon whoIcon--beginner" aria-hidden="true">🚀</div>
+            <div class="whoBody">
+              <h3>Початківцям в IT</h3>
+              <p>Є інтерес, але не знаєш, з чого почати — допоможемо.</p>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <!-- FORMAT (твій блок / готовий) -->
-    <section class="section" id="format" aria-label="Format">
+
+    <!-- ═══════════════════════════════════════════════
+         FORMAT — [CHANGE] Розмітку перероблено: top-row flex замість absolute-icon
+         ═══════════════════════════════════════════════ -->
+    <section class="section" id="format" aria-labelledby="formatTitle">
       <div class="container">
+
+        <!-- Figma: #F9F6FF bg, box-shadow 0 6px 8px #B092FF, radius 16 -->
         <div class="formatWrap">
-          <!-- велика іконка у верхньому лівому куті -->
-          <img class="formatIconBig" src="/assets/images/icon-format.png" alt="Format illustration">
 
-          <h2 class="title formatTitle">Обирай формат навчання</h2>
-          <p class="subtitle">Повне занурення або гнучкий темп — як тобі зручно.</p>
+          <!-- Top: ілюстрація + заголовок поруч -->
+          <div class="formatTopRow">
+            <div class="formatIllustration" aria-hidden="true">
+              <!-- [CHANGE] SVG clipboard+clock замість png-заглушки -->
+              <svg width="170" height="170" viewBox="0 0 170 170" fill="none">
+                <!-- clipboard body -->
+                <rect x="28" y="30" width="100" height="124" rx="12" fill="#E8E0FF" stroke="#9A82DB" stroke-width="2.5"/>
+                <!-- clip tab -->
+                <rect x="54" y="20" width="48" height="20" rx="10" fill="#9A82DB"/>
+                <!-- lines -->
+                <line x1="46" y1="68" x2="110" y2="68" stroke="#9A82DB" stroke-width="2" stroke-linecap="round"/>
+                <line x1="46" y1="82" x2="90" y2="82" stroke="#9A82DB" stroke-width="2" stroke-linecap="round"/>
+                <!-- check 1 -->
+                <path d="M46 100L56 112L74 88" stroke="#6c5ce7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- check 2 -->
+                <path d="M46 122L56 134L74 110" stroke="#9A82DB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+                <!-- clock circle overlay -->
+                <circle cx="130" cy="124" r="36" fill="white" stroke="#9A82DB" stroke-width="2.5"/>
+                <line x1="130" y1="108" x2="130" y2="124" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="130" y1="124" x2="144" y2="133" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="130" cy="124" r="4" fill="#6c5ce7"/>
+                <!-- sparkles -->
+                <circle cx="30" cy="52" r="3" fill="#D0BCFF"/>
+                <circle cx="138" cy="36" r="2" fill="#D0BCFF"/>
+                <circle cx="22" cy="120" r="2" fill="#D0BCFF"/>
+              </svg>
+            </div>
 
+            <div class="formatTopText">
+              <!-- Figma: Volkhov 700 50px letter-spacing -.04em #181E4B -->
+              <h2 class="title" id="formatTitle" style="text-align:left">Обирай формат навчання</h2>
+              <!-- Figma: Poppins 600 18px center #5E6282 -->
+              <p class="subtitle" style="text-align:left">Повне занурення або гнучкий темп — як тобі зручно.</p>
+            </div>
+          </div>
+
+          <!-- Table: labels + 2 cols -->
           <div class="formatInner">
             <div class="formatLabels" aria-hidden="true">
               <div class="lbl">Графік</div>
@@ -109,80 +408,97 @@
               <div class="lbl">Результат</div>
             </div>
 
-            <div class="formatRight">
-              <div class="formatTable">
-                <div class="formatCol">
-                  <div class="formatHead">
-                      <div class="miniIco">
-                        <img src="assets/icons/calendar.svg" alt="Calendar">
-                      </div>
+            <div class="formatCols">
 
-                    <span>Повний день</span>
-                  </div>
-
-                  <div class="formatRows">
-                    <div class="formatRow">Будні, інтенсивний темп</div>
-                    <div class="formatRow">Щоденні заняття + практика</div>
-                    <div class="formatRow">Швидкий прогрес і максимум фокусу</div>
-                  </div>
+              <!-- Figma: #D0BFFF header, shadow 0 4px 4px rgba(0,0,0,.25), white body, radius 20 top -->
+              <div class="formatCol">
+                <div class="formatHead">
+                  <span class="miniIco" aria-hidden="true">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                      <rect x="4" y="7" width="28" height="24" rx="4" stroke="white" stroke-width="2"/>
+                      <line x1="4" y1="15" x2="32" y2="15" stroke="white" stroke-width="2"/>
+                      <line x1="12" y1="4" x2="12" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="24" y1="4" x2="24" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span>Повний день</span>
                 </div>
-
-                <div class="formatCol">
-                  <div class="formatHead">
-                      <div class="miniIco">
-                        <img src="assets/icons/clock.svg" alt="Clock">
-                      </div>
-                    <span>Гнучкий темп</span>
-                  </div>
-
-                  <div class="formatRows">
-                    <div class="formatRow">Сам керуєш часом</div>
-                    <div class="formatRow">Уроки + завдання у своєму ритмі</div>
-                    <div class="formatRow">Стабільний прогрес без стресу</div>
-                  </div>
+                <div class="formatRows">
+                  <div class="formatRow">Будні, інтенсивний темп</div>
+                  <div class="formatRow">Щоденні заняття + практика</div>
+                  <div class="formatRow">Швидкий прогрес і максимум фокусу</div>
                 </div>
               </div>
 
-              <div class="formatActions">
-                <a class="btn btn-soft" href="#courses">Обрати повний день</a>
-                <a class="btn btn-primary" href="#courses">Обрати гнучкий формат</a>
+              <div class="formatCol">
+                <div class="formatHead">
+                  <span class="miniIco" aria-hidden="true">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                      <circle cx="18" cy="18" r="13" stroke="white" stroke-width="2"/>
+                      <polyline points="18,9 18,18 24,23"
+                                stroke="white" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span>Гнучкий темп</span>
+                </div>
+                <div class="formatRows">
+                  <div class="formatRow">Сам керуєш часом</div>
+                  <div class="formatRow">Уроки + завдання у своєму ритмі</div>
+                  <div class="formatRow">Стабільний прогрес без стресу</div>
+                </div>
               </div>
+
             </div>
           </div>
+
+          <!-- Figma: кнопки під колонками -->
+          <div class="formatActions">
+            <!-- Figma: #9A82DB btn, radius 16 -->
+            <a class="btn btn-soft" href="#courses">Обрати повний день</a>
+            <a class="btn btn-primary" href="#courses">Обрати гнучкий формат</a>
+          </div>
+
         </div>
       </div>
     </section>
 
-<!--    &lt;!&ndash; COURSES (заглушка) &ndash;&gt;-->
-<!--    <section class="section placeholder" id="courses" aria-label="Courses">-->
-<!--      <div class="container">-->
-<!--        <div class="placeholderBox">-->
-<!--          <h2 class="placeholderTitle">Курси (заглушка)</h2>-->
-<!--          <p class="placeholderText">Тут буде каталог курсів / карточки.</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </section>-->
 
-    <!-- FOOTER (твій блок / готовий) -->
+    <!-- ═══════════════════════════════════════════════
+         FOOTER — [CHANGE] Переписано соціальні іконки на inline SVG,
+                  оновлено кольори строго з Figma
+         ═══════════════════════════════════════════════ -->
     <footer class="footer" id="contact">
+      <!-- Figma: зірки-точки фон (was: stars class) -->
       <div class="stars" aria-hidden="true"></div>
 
       <div class="container">
         <div class="footerGrid">
-          <div class="footerBrand">
-            <div class="logo">
-              <img src="assets/images/logo.png" alt="CyberField NeT">
-            </div>
 
-            <div class="txt">
+          <!-- Figma: logo 80×80 radius 16 + heading Volkhov 700 25px white -->
+          <div class="footerBrand">
+            <div class="footerLogo">
+              <svg width="62" height="62" viewBox="0 0 62 62" fill="none" aria-label="CyberField NeT logo">
+                <rect width="62" height="62" rx="16" fill="#1a2035"/>
+                <path d="M31 8L50 19V43L31 54L12 43V19L31 8Z" fill="#6c5ce7" opacity=".85"/>
+                <path d="M31 17L44 25V39L31 47L18 39V25L31 17Z" fill="#00C3D0" opacity=".7"/>
+                <path d="M31 26L37 30V38L31 42L25 38V30L31 26Z" fill="white"/>
+              </svg>
+            </div>
+            <div class="footerBrandText">
+              <!-- Figma: Volkhov 700 25px white -->
               <h3>CyberField NeT</h3>
+              <p class="footerBrandSub">Онлайн-курси IT-профессій</p>
+              <!-- Figma: Poppins 500 18px lh 30px color mix: white + #9395A6 -->
               <p>
-                Онлайн-курси IT-професій з практикою та підтримкою менторів.
-                Вчись у своєму темпі або обирай повне занурення — результат важливіший за “галочки”.
+                <strong>CyberField NeT — онлайн-курси IT-профессій з практикою та підтримкою менторів.</strong><br>
+                Вчись у своєму темпі або обирай повне занурення —
+                результат важливіший за «галочки».
               </p>
             </div>
           </div>
 
+          <!-- Figma: "Навчання" колонка Poppins 500 18px #9395A6, заголовок 20px white -->
           <div class="footerCol">
             <h4>Навчання</h4>
             <a href="#courses">Курси</a>
@@ -191,6 +507,7 @@
             <a href="#who">Для кого</a>
           </div>
 
+          <!-- Figma: "Компанія" колонка -->
           <div class="footerCol">
             <h4>Компанія</h4>
             <a href="#why">Про нас</a>
@@ -198,32 +515,50 @@
             <a href="#partners">Партнерство</a>
           </div>
 
-          <div class="footerCol">
+          <!-- Figma: Соцмережі + CTA box -->
+          <div class="footerSocials">
             <h4>Ми в соцмережах</h4>
 
-            <!-- тут підставиш свої круглі кнопки (svg/img) -->
+            <!-- Figma: кружки #D0BCFF, 41–45px -->
             <div class="socialRow">
               <a href="#" aria-label="Facebook">
-                <img src="/assets/icons/facebook.svg" alt="" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M12 2H9C7.9 2 7 2.9 7 4v3H4v3h3v8h3v-8h2.6L13 7H10V4.5C10 4.2 10.2 4 10.5 4H13V2h-1z" fill="#080809"/>
+                </svg>
               </a>
               <a href="#" aria-label="Instagram">
-                <img src="/assets/icons/instagram.svg" alt="" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="4" stroke="#080808" stroke-width="1.8"/>
+                  <circle cx="10" cy="10" r="4" stroke="#080808" stroke-width="1.8"/>
+                  <circle cx="14.5" cy="5.5" r="1.2" fill="#080808"/>
+                </svg>
               </a>
               <a href="#" aria-label="LinkedIn">
-                <img src="/assets/icons/linkedin.svg" alt="" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="7" width="4" height="11" fill="#080808"/>
+                  <circle cx="4" cy="4" r="2" fill="#080808"/>
+                  <path d="M9 7h3.5v2c.6-1.2 2-2 3.5-2 2.5 0 3 2 3 3.5V18h-3.5v-7c0-.7 0-1.5-.8-1.5s-1.2.8-1.2 1.5v7H9V7z" fill="#080808"/>
+                </svg>
               </a>
               <a href="#" aria-label="Telegram">
-                <img src="/assets/icons/telegram.svg" alt="" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M2 10L18 3 14 17 9 12 2 10z" stroke="#080808" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M9 12L13.5 8" stroke="#080808" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
               </a>
             </div>
 
+            <!-- Figma: CTA box #181E2C bg, border .5px #CFF9FC, radius 16 -->
             <div class="footerCta">
               <p>Хочеш підібрати напрям під себе?<br>Напиши — підкажемо старт.</p>
-              <a class="btn btn-primary" href="#courses">Отримати консультацію</a>
+              <!-- Figma: btn #4F378B bg radius 16 -->
+              <a class="btn btn-consult" href="#courses">Отримати консультацію</a>
             </div>
           </div>
-        </div>
 
+        </div><!-- /footerGrid -->
+
+        <!-- Figma: line #625B71, copyright Poppins 500 14px #5E6282 -->
         <div class="footerBottom" id="privacy">
           <div>© 2026 CyberField NeT. Усі права захищені.</div>
           <div class="footerLinks">
@@ -231,10 +566,24 @@
             <a href="#terms" id="terms">Умови</a>
           </div>
         </div>
+
       </div>
     </footer>
+
   </main>
 
-  <script src="js/main.js"></script>
+  <script>
+    // [CHANGE] Бургер-меню для мобільних
+    const btn = document.getElementById('burgerBtn');
+    const navLinks = document.querySelector('.navLinks');
+    if (btn && navLinks) {
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        navLinks.classList.toggle('navLinks--open', !open);
+      });
+    }
+  </script>
+
 </body>
 </html>

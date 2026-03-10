@@ -1,270 +1,737 @@
-/* FORMAT */
-.formatWrap{
-  background: var(--violet-50);
-  border:1px solid rgba(108,92,231,.12);
-  border-radius:28px;
-  padding:44px 44px 34px;
-  box-shadow: 0 22px 50px rgba(108,92,231,.14);
-  position:relative;
-  overflow:hidden;
-}
-.formatTitle{ margin-top:8px; }
+/* ════════════════════════════════════════════════════════
+   sections.css
+   [CHANGE] Повна перебудова:
+   • Hero     — новий (замість placeholder)
+   • Why      — новий (4 картки + ілюстрація)
+   • How      — новий (5 рядків + декор)
+   • Who      — новий (2×2 картки)
+   • Format   — оновлено (topRow flex, точні кольори Figma)
+   • Footer   — оновлено (inline SVG іконки, точні відступи)
+   ════════════════════════════════════════════════════════ */
 
-.formatIconBig{
-  position:absolute;
-  left:28px;
-  top:28px;
-  width:170px;
-  opacity:1;
-  filter: drop-shadow(0 18px 40px rgba(108,92,231,.18));
-}
 
-.formatInner{
-  margin-top:28px;
-  display:grid;
-  grid-template-columns: 240px 1fr;
-  gap:26px;
-  align-items:stretch;
+/* ══════════════════════════════
+   HERO
+   Figma: 1440px page, hero from top:0 to ~top:851
+   ══════════════════════════════ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 86px 0 100px;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
 }
 
-.formatLabels{
-  display:flex;
-  flex-direction:column;
-  gap:26px;
-  padding-top:110px;
-}
-.formatLabels .lbl{
-  font-weight:900;
-  font-size:22px;
-  color:rgba(20,26,46,.92);
-  position:relative;
-  padding-bottom:10px;
-}
-.formatLabels .lbl::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:0;
-  width:120px;
-  height:2px;
-  background: rgba(20,26,46,.15);
-  border-radius:999px;
+/* Figma: Decore #DBDAFF 766×872px right top */
+.heroBlobRight {
+  position: absolute;
+  right: -80px;
+  top: -220px;
+  width: min(766px, 60vw);
+  height: 900px;
+  background: var(--heroBlob);
+  border-radius: 44% 0 0 50%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.formatTable{
-  display:grid;
+/* Figma: Ellipse 8 #6155F5 opacity .3 blur 75px */
+.heroBlobLeft {
+  position: absolute;
+  left: -180px;
+  bottom: -160px;
+  width: 480px;
+  height: 480px;
+  background: #6155F5;
+  opacity: .22;
+  filter: blur(75px);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap:18px;
-  align-items:start;
+  align-items: center;
+  gap: 48px;
 }
 
-.formatCol{
-  background:#ffffff;
-  border:1px solid rgba(108,92,231,.12);
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow: 0 14px 34px rgba(108,92,231,.10);
+/* Figma: Poppins 700 20px uppercase #5153DF */
+.heroTagline {
+  font-family: var(--fontBody);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  color: #5153DF;
+  margin: 0 0 14px;
 }
 
-.formatHead{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:20px 22px;
-  background: rgba(205,191,255,.75);
-  border-bottom:1px solid rgba(108,92,231,.16);
-  font-weight:900;
-  font-size:22px;
+/* Figma: Volkhov 700 84px lh 89px letter-spacing -.04em #181E4B */
+.heroHeading {
+  font-family: var(--fontHeading);
+  font-weight: 700;
+  font-size: clamp(52px, 7vw, 84px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--c-text1);
+  margin: 0 0 22px;
 }
 
-.formatHead .miniIco img{
-  width: 50px;
-  height: 50px;
-  display: block;
+/* Figma: Poppins 500 18px lh 30px #444866 */
+.heroDesc {
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--c-text2);
+  margin: 0 0 44px;
+  max-width: 400px;
+}
+
+/* Figma: #9A82DB, radius 10px, shadow 0 20px 35px rgba(128,0,255,.15) */
+.heroBtn {
+  font-size: 18px;
+  padding: 17px 32px;
+  border-radius: 10px;
+}
+
+.heroImage img {
+  width: 100%;
+  max-width: 640px;
+  height: 460px;
+  object-fit: cover;
+  border-radius: 28px;
+  /* purple tinted drop shadow */
+  filter: drop-shadow(0 24px 60px rgba(97,85,245,.28));
+}
+
+/* ── Hero responsive ── */
+@media (max-width: 980px) {
+  .heroContent { grid-template-columns: 1fr; gap: 36px; }
+  .heroImage { display: flex; justify-content: center; }
+  .heroImage img { height: 320px; max-width: 100%; }
+  .heroBlobRight { width: 55vw; }
+}
+@media (max-width: 640px) {
+  .hero { padding: 64px 0 72px; min-height: auto; }
+  .heroHeading { font-size: 44px; }
+  .heroDesc { font-size: 16px; }
+  .heroBtn { width: 100%; justify-content: center; }
+  .heroBlobRight { display: none; }
 }
 
 
-.formatRows{
-  padding:18px 22px 22px;
-}
-.formatRow{
-  padding:18px 0;
-  color:var(--muted);
-  font-size:18px;
-  line-height:1.5;
-}
-.formatRow + .formatRow{
-  border-top:1px solid rgba(230,230,243,.95);
+/* ══════════════════════════════
+   WHY SECTION
+   Figma: карточки #F5F0FF 393×153px radius 16
+   ══════════════════════════════ */
+.whySection { background: #fff; }
+
+.whyLayout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+  margin-top: 48px;
 }
 
-.formatActions{
-  display:grid;
+/* Figma: 2×2 grid cards */
+.whyGrid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap:18px;
-  margin-top:18px;
-}
-.formatActions .btn{
-  justify-self:center;
-  width:min(260px, 100%);
-  padding:14px 18px;
-  border-radius:14px;
-  font-weight:900;
+  gap: 22px;
 }
 
-/* FOOTER */
-.footer{
-  background: linear-gradient(180deg, var(--navy), var(--navy2));
-  color:rgba(255,255,255,.92);
-  padding:56px 0 22px;
-  position:relative;
-  overflow:hidden;
+/* Figma: #F5F0FF bg, radius 16, shadow soft */
+.whyCard {
+  background: var(--card-why);
+  border-radius: var(--radius3);
+  padding: 24px 22px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 140px;
+  transition: box-shadow .2s ease, transform .2s ease;
 }
-.stars{
-  position:absolute;
-  inset:-40px 0 0 0;
-  opacity:.22;
-  pointer-events:none;
+.whyCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(108,92,231,.14);
+}
+
+.whyCardBody { flex: 1; }
+
+/* Figma: Volkhov 700 25px #181E4B */
+.whyCard h3 {
+  font-size: 22px;
+  color: var(--c-text1);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+/* Figma: Poppins 500 18px lh 30px #444866 */
+.whyCard p {
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--c-text2);
+}
+
+.whyCardIcon {
+  flex-shrink: 0;
+  opacity: .65;
+}
+
+/* Figma: person illustration правіше карток */
+.whyIllustration {
+  width: 240px;
+  flex-shrink: 0;
+}
+.whyIllustration img {
+  width: 240px;
+  height: 320px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 28px;
+  filter: drop-shadow(0 16px 40px rgba(97,85,245,.18));
+  /* Figma-like purple tint overlay via mix-blend */
+  mix-blend-mode: multiply;
+  opacity: .92;
+}
+
+/* ── Why responsive ── */
+@media (max-width: 980px) {
+  .whyLayout { grid-template-columns: 1fr; }
+  .whyIllustration { display: none; }
+}
+@media (max-width: 640px) {
+  .whyGrid { grid-template-columns: 1fr; }
+}
+
+
+/* ══════════════════════════════
+   HOW SECTION
+   Figma: white card border 2px #4F378B shadow -4px 10px 10px #D0BCFF radius 16
+   ══════════════════════════════ */
+.howSection {
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Figma: card width 925px, centered/offset */
+.howCard {
+  box-sizing: border-box;
+  max-width: 880px;
+  margin: 44px auto 0;
+  background: #fff;
+  border: 2px solid var(--violet-700);
+  box-shadow: -4px 10px 10px var(--violet-300);
+  border-radius: var(--radius3);
+  padding: 0 40px;
+}
+
+/* Figma: row ~83px, icon 24px, heading + desc */
+.howRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 0;
+}
+
+/* Figma: cyan + icon rotated = "+" mark */
+.howIconPlus {
+  font-family: var(--fontUI);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--cyan3);          /* Figma: #00C0E8 */
+  margin-top: 6px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Figma: остання row — check ✓ Indigo #6155F5 */
+.howIconCheck {
+  font-family: var(--fontUI);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--indigo);
+  margin-top: 8px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+  line-height: 1;
+}
+
+.howRowBody {}
+
+/* Figma: Volkhov 700 25px #181E4B */
+.howRow h3 {
+  font-size: 22px;
+  color: var(--c-text1);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+/* Figma: Poppins 500 18px lh 30px #444866 */
+.howRow p {
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--c-text2);
+}
+
+/* Figma: separator between rows #CCCCCC */
+.howDivider {
+  border-color: #ccc;
+  margin: 0;
+}
+
+/* ── How responsive ── */
+@media (max-width: 640px) {
+  .howCard { padding: 0 22px; }
+  .howRow h3 { font-size: 19px; }
+  .floatIcon { display: none; }
+}
+
+
+/* ══════════════════════════════
+   WHO FITS SECTION
+   Figma: 4 картки 2×2, 475×200px #F4EFFF radius 16 shadow
+   ══════════════════════════════ */
+.whoSection { position: relative; overflow: hidden; }
+
+/* Figma: decor blob #CFBDFE opacity .8 blur 100px ліворуч-знизу */
+.whoDecorBlob {
+  position: absolute;
+  left: -60px;
+  bottom: -60px;
+  width: 280px;
+  height: 280px;
+  background: #CFBDFE;
+  opacity: .7;
+  filter: blur(100px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.whoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 44px;
+}
+
+/* Figma: #F4EFFF bg, shadow 0 4px 4px rgba(0,0,0,.25), radius 16 */
+.whoCard {
+  background: var(--card-who);
+  box-shadow: 0 4px 4px rgba(0,0,0,.14);
+  border-radius: var(--radius3);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 150px;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.whoCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(108,92,231,.16);
+}
+
+/* Figma: icon ~130×108px (3D illustration style) — замінюємо emoji */
+.whoIcon {
+  font-size: 64px;
+  flex-shrink: 0;
+  width: 100px;
+  text-align: center;
+  /* purple-toned filter to match Figma's purple 3D icons */
+  filter: hue-rotate(20deg) saturate(1.1);
+}
+
+.whoBody {}
+
+/* Figma: Volkhov 700 25px lh 89px (display) #181E4B */
+.whoCard h3 {
+  font-size: 22px;
+  color: var(--c-text1);
+  margin-bottom: 8px;
+}
+
+/* Figma: Poppins 500 18px lh 30px #444866 */
+.whoCard p {
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--c-text2);
+}
+
+/* ── Who responsive ── */
+@media (max-width: 720px) {
+  .whoGrid { grid-template-columns: 1fr; }
+  .whoIcon { font-size: 52px; width: 70px; }
+}
+
+
+/* ══════════════════════════════
+   FORMAT SECTION
+   Figma: #F9F6FF bg, shadow 0 6px 8px #B092FF, radius 16
+   ══════════════════════════════ */
+
+/* [CHANGE] Зовнішня обгортка секції */
+.formatWrap {
+  background: var(--card-fmt);
+  border: 1px solid rgba(108,92,231,.10);
+  border-radius: var(--radius3);
+  padding: 40px 44px 36px;
+  box-shadow: 0 6px 8px var(--violet-400);
+  position: relative;
+  overflow: visible;
+}
+
+/* [CHANGE] Top row: ілюстрація + заголовок поруч (замість absolute позиції) */
+.formatTopRow {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+.formatIllustration {
+  flex-shrink: 0;
+  width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formatTopText { flex: 1; }
+.formatTopText .title   { text-align: left; }
+.formatTopText .subtitle{ text-align: left; margin-top: 8px; }
+
+/* Main grid: labels | columns */
+.formatInner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Figma: Volkhov 700 24px #22005D row labels */
+.formatLabels {
+  display: flex;
+  flex-direction: column;
+  /* top padding to align with formatRows data */
+  padding-top: 104px;
+  gap: 0;
+}
+.lbl {
+  font-family: var(--fontHeading);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--violet-800);
+  /* match row height */
+  height: 66px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 4px;
+  position: relative;
+}
+.lbl::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(204,204,204,.7);
+}
+.lbl:last-child::after { display: none; }
+
+/* Two format columns side by side */
+.formatCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Figma: white bg, radius 20, border top strip #D0BFFF shadow */
+.formatCol {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(108,92,231,.10);
+}
+
+/* Figma: header strip #D0BFFF bg, shadow 0 4px 4px rgba(0,0,0,.25) */
+.formatHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  background: var(--fmt-head);
+  box-shadow: 0 4px 4px rgba(0,0,0,.18);
+  /* Figma: Volkhov 700 24px #1D192B */
+  font-family: var(--fontHeading);
+  font-weight: 700;
+  font-size: 22px;
+  color: #1D192B;
+  letter-spacing: -0.03em;
+}
+.miniIco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Figma: Poppins 500 20px lh 30px #444866 per-row */
+.formatRows { padding: 0 22px 16px; }
+.formatRow {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-text2);
+  border-bottom: 1px solid rgba(204,204,204,.55);
+}
+.formatRow:last-child { border-bottom: none; }
+
+/* [CHANGE] Кнопки нижче колонок */
+.formatActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 20px;
+}
+.formatActions .btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--radius3);
+  font-size: 17px;
+}
+
+/* ── Format responsive ── */
+@media (max-width: 1080px) {
+  .formatInner { grid-template-columns: 150px 1fr; }
+}
+@media (max-width: 820px) {
+  .formatTopRow { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .formatIllustration { width: 120px; }
+  .formatInner { grid-template-columns: 1fr; }
+  .formatLabels { display: none; }
+  .formatCols { grid-template-columns: 1fr; }
+  .formatActions { grid-template-columns: 1fr; }
+  .formatWrap { padding: 28px 22px 24px; }
+}
+@media (max-width: 480px) {
+  .formatHead { font-size: 18px; }
+  .formatRow  { font-size: 16px; }
+}
+
+
+/* ══════════════════════════════
+   FOOTER
+   Figma: bg #121723 (Rectangle 171)
+   ══════════════════════════════ */
+.footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.92);
+  padding: 56px 0 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Figma: зірки/точки на темному тлі */
+.stars {
+  position: absolute;
+  inset: -40px 0 0 0;
+  opacity: .18;
+  pointer-events: none;
   background:
-    radial-gradient(circle at 10% 20%, rgba(255,255,255,.7) 1px, transparent 2px),
-    radial-gradient(circle at 20% 70%, rgba(255,255,255,.55) 1px, transparent 2px),
-    radial-gradient(circle at 80% 35%, rgba(255,255,255,.65) 1px, transparent 2px),
-    radial-gradient(circle at 70% 80%, rgba(255,255,255,.55) 1px, transparent 2px);
-  background-size: 260px 240px;
-  filter: blur(.2px);
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,.8) 1px, transparent 2px),
+    radial-gradient(circle at 25% 65%, rgba(255,255,255,.6) 1px, transparent 2px),
+    radial-gradient(circle at 55% 30%, rgba(255,255,255,.5) 1px, transparent 2px),
+    radial-gradient(circle at 75% 80%, rgba(255,255,255,.6) 1px, transparent 2px),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,.7) 1px, transparent 2px);
+  background-size: 300px 260px;
 }
 
-.footerGrid{
-  display:grid;
-  grid-template-columns: 1.2fr .8fr .8fr 1fr;
-  gap:28px;
-  align-items:start;
-  position:relative;
-  z-index:1;
+/* Figma: 4-column footer grid */
+.footerGrid {
+  display: grid;
+  grid-template-columns: 1.4fr .8fr .7fr 1fr;
+  gap: 28px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
 }
 
-.footerBrand{
-  display:flex;
-  gap:16px;
-  align-items:flex-start;
+/* Figma: лого 80×80 radius 16 + brand text */
+.footerBrand {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 }
-.footerBrand .logo{
-  width:62px;
-  height:62px;
-  border-radius:18px;
-  overflow:hidden;
-  background:#0b0f1a;
+.footerLogo {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  overflow: hidden;
   box-shadow: 0 18px 45px rgba(0,0,0,.35);
-  flex:0 0 62px;
 }
-.footerBrand .logo img{ width:100%; height:100%; object-fit:cover; }
+.footerBrandText {}
 
-.footerBrand .txt h3{
-  margin:2px 0 6px;
-  font-size:26px;
-  letter-spacing:-0.02em;
-}
-.footerBrand .txt p{
-  margin:0;
-  color:rgba(255,255,255,.68);
-  line-height:1.6;
-  max-width:380px;
+/* Figma: Volkhov 700 25px white */
+.footerBrandText h3 {
+  font-family: var(--fontHeading);
+  font-size: 22px;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: -0.03em;
 }
 
-.footerCol h4{
-  margin:0 0 14px;
-  font-size:18px;
-  letter-spacing:-0.02em;
-  color:white;
-}
-.footerCol a{
-  display:block;
-  padding:8px 0;
-  color:rgba(255,255,255,.72);
-}
-.footerCol a:hover{ color:white; }
-
-.socialRow{
-  display:flex;
-  gap:14px;
-  align-items:center;
-  margin:10px 0 18px;
-}
-.socialRow a{
-  width:44px; height:44px;
-  border-radius:999px;
-  display:grid;
-  place-items:center;
-  background: rgba(205,191,255,.85);
-  color:#0b1120;
-  box-shadow: 0 12px 26px rgba(0,0,0,.22);
-  transition:transform .15s ease;
-  overflow:hidden;
-}
-.socialRow a:hover{ transform: translateY(-2px); }
-.socialRow img{
-  width:22px;
-  height:22px;
-  object-fit:contain;
+/* Figma: Poppins 500 18px #9395A6 */
+.footerBrandSub {
+  font-family: var(--fontBody);
+  font-size: 14px;
+  color: var(--c-text4);
+  margin-bottom: 10px;
 }
 
-.footerCta{
-  border:1px solid rgba(205,191,255,.45);
-  border-radius:18px;
-  padding:18px 18px;
-  background: rgba(15,21,36,.55);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 18px 45px rgba(0,0,0,.25);
+.footerBrandText p {
+  font-family: var(--fontBody);
+  font-size: 15px;
+  line-height: 26px;
+  color: rgba(255,255,255,.65);
+  max-width: 340px;
 }
-.footerCta p{
-  margin:0 0 14px;
-  font-size:18px;
-  font-weight:800;
-  line-height:1.4;
+.footerBrandText p strong {
+  color: rgba(255,255,255,.88);
+  display: block;
+  margin-bottom: 6px;
 }
 
-.footerBottom{
-  margin-top:34px;
-  padding-top:18px;
-  border-top:1px solid rgba(255,255,255,.12);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  color:rgba(255,255,255,.55);
-  position:relative;
-  z-index:1;
-  flex-wrap:wrap;
+/* Figma: колонка заголовок Poppins 500 20px white, links 18px #9395A6 */
+.footerCol h4 {
+  font-family: var(--fontBody);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #fff;
+  margin-bottom: 14px;
+  letter-spacing: 0;
 }
-.footerLinks{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+.footerCol a {
+  display: block;
+  font-family: var(--fontBody);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--c-text4);
+  padding: 4px 0;
+  transition: color .18s ease;
 }
-.footerBottom a{
-  color:rgba(255,255,255,.55);
-  padding:8px 10px;
-  border-radius:12px;
-}
-.footerBottom a:hover{ color:white; background: rgba(255,255,255,.06); }
+.footerCol a:hover { color: rgba(255,255,255,.9); }
 
-/* responsive */
-@media (max-width: 980px){
-  .formatInner{ grid-template-columns:1fr; }
-  .formatLabels{
-    padding-top:0;
-    flex-direction:row;
-    justify-content:space-between;
-  }
-  .formatLabels .lbl::after{ width:70px; }
-  .footerGrid{ grid-template-columns:1fr 1fr; }
+/* Соціальні мережі */
+.footerSocials {}
+.footerSocials h4 {
+  font-family: var(--fontBody);
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 14px;
 }
 
-@media (max-width: 640px){
-  .formatWrap{ padding:28px 18px 22px; }
-  .formatIconBig{ width:120px; left:14px; top:16px; opacity:.9; }
-  .formatLabels{ gap:12px; }
-  .formatLabels .lbl{ font-size:18px; }
-  .formatTable{ grid-template-columns:1fr; }
-  .formatActions{ grid-template-columns:1fr; }
-  .footerGrid{ grid-template-columns:1fr; }
+/* Figma: кружки #D0BCFF 41–45px */
+.socialRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.socialRow a {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--violet-300);
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.socialRow a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.32);
+}
+
+/* Figma: CTA box #181E2C bg, border .5px #CFF9FC, radius 16 */
+.footerCta {
+  background: var(--navy2);
+  border: 0.5px solid var(--cyan2);
+  border-radius: var(--radius3);
+  padding: 18px 20px;
+}
+/* Figma: Poppins 500 18px lh 30px white */
+.footerCta p {
+  font-family: var(--fontBody);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+/* Figma: line 1px #625B71 */
+.footerBottom {
+  margin-top: 36px;
+  padding-top: 18px;
+  border-top: 1px solid #625B71;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  /* Figma: Poppins 500 14px #5E6282 */
+  font-family: var(--fontBody);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text3);
+}
+.footerLinks { display: flex; gap: 6px; flex-wrap: wrap; }
+.footerBottom a {
+  color: var(--c-text3);
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: color .18s ease, background .18s ease;
+}
+.footerBottom a:hover { color: white; background: rgba(255,255,255,.06); }
+
+/* ── Footer responsive ── */
+@media (max-width: 1080px) {
+  .footerGrid { grid-template-columns: 1fr 1fr; gap: 28px 36px; }
+  .footerBrand { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .footerGrid { grid-template-columns: 1fr; }
+  .footerBrand { grid-column: span 1; }
+  .footer { padding: 44px 0 18px; }
 }

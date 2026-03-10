@@ -1,27 +1,72 @@
-:root{
-  --bg:#ffffff;
-  --text:#141a2e;
+/* ════════════════════════════════════════════════════
+   variables.css
+   [CHANGE] Додано токени шрифтів, нові кольори з Figma,
+            navy2 тепер точно #0b1120
+   ════════════════════════════════════════════════════ */
+:root {
+  /* ── Fonts ─────────────────────────── */
+  --fontHeading: 'Volkhov',    Georgia, serif;
+  --fontBody:    'Poppins',    system-ui, sans-serif;
+  --fontUI:      'Inter',      system-ui, sans-serif;
+
+  /* ── Background / Text ─────────────── */
+  --bg:   #ffffff;
+  --text: #141a2e;
   --muted:#5b6280;
-  --line:#e6e6f3;
+  --line: #e6e6f3;
 
-  --violet-50:#f7f4ff;
-  --violet-100:#efeaff;
-  --violet-200:#e3dbff;
-  --violet-300:#cdbfff;
-  --violet-500:#8d79e6;
+  /* ── Figma exact text colors ───────── */
+  --c-text1:  #181E4B;   /* headings */
+  --c-text2:  #444866;   /* body desc */
+  --c-text3:  #5E6282;   /* subtitle / muted */
+  --c-text4:  #9395A6;   /* footer links */
+  --c-title:  #14183E;   /* "Чому CyberField NeT" */
 
-  --accent:#6c5ce7;
-  --accent2:#8fdcff;
+  /* ── Violet scale ───────────────────── */
+  --violet-50:  #f7f4ff;
+  --violet-100: #efeaff;
+  --violet-200: #e8e0ff;  /* [CHANGE] додано */
+  --violet-300: #D0BCFF;  /* соцмережі / деталі */
+  --violet-400: #B092FF;  /* format box-shadow */
+  --violet-500: #9A82DB;  /* primary btn */
+  --violet-600: #6c5ce7;  /* accent */
+  --violet-700: #4F378B;  /* footer CTA btn */
+  --violet-800: #22005D;  /* how-section label */
 
-  --navy:#0f1524;
-  --navy2:#0b1120;
+  /* ── Cyan ───────────────────────────── */
+  --cyan:  #00C3D0;
+  --cyan2: #CFF9FC;       /* footer CTA border */
+  --cyan3: #00C0E8;       /* how icon */
 
-  --radius:18px;
-  --radius2:22px;
+  /* ── Indigo decor ───────────────────── */
+  --indigo: #6155F5;
 
-  --shadow:0 18px 50px rgba(45, 32, 115, 0.12);
-  --shadow2:0 10px 24px rgba(25, 20, 70, 0.12);
-  --shadowSoft:0 10px 30px rgba(88, 65, 190, 0.12);
+  /* ── Hero / section blob ────────────── */
+  --heroBlob: #DBDAFF;
 
-  --container:1180px;
+  /* ── Card backgrounds ───────────────── */
+  --card-why: #F5F0FF;
+  --card-who: #F4EFFF;
+  --card-fmt: #F9F6FF;
+
+  /* ── Format head strip ──────────────── */
+  --fmt-head: #D0BFFF;
+
+  /* ── Navy (footer) ───────────────────── */
+  --navy:  #121723;   /* Figma Rectangle 171 */
+  --navy2: #181E2C;   /* CTA box bg */
+
+  /* ── Radii ────────────────────────────  */
+  --radius:  18px;
+  --radius2: 22px;
+  --radius3: 16px;
+
+  /* ── Shadows ──────────────────────────  */
+  --shadow:     0 18px 50px rgba(45, 32, 115, 0.12);
+  --shadow2:    0 10px 24px rgba(25, 20, 70, 0.12);
+  --shadowSoft: 0 10px 30px rgba(88, 65, 190, 0.12);
+  --shadowBtn:  0 20px 35px rgba(128, 0, 255, 0.15);  /* hero button */
+
+  /* ── Layout ───────────────────────────  */
+  --container: 1180px;
 }
