@@ -10,11 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/variables.css" />
-  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/base.css" />
-  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/layout.css" />
-  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/components.css" />
-  <link rel="stylesheet" href="../../Desktop/cyberfield_web-main/css/sections.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections.css" />
 </head>
 
 <body>
@@ -28,12 +28,7 @@
 
         <a class="brand" href="#top" aria-label="CyberField NeT">
           <div class="brandLogo">
-            <!-- [CHANGE] Inline SVG-логотип замість img -->
-            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <path d="M22 4L38 13V31L22 40L6 31V13L22 4Z" fill="#6c5ce7" opacity=".85"/>
-              <path d="M22 12L32 18V30L22 36L12 30V18L22 12Z" fill="#00C3D0" opacity=".7"/>
-              <path d="M22 20L27 23V29L22 32L17 29V23L22 20Z" fill="white"/>
-            </svg>
+            <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="44" height="44" style="border-radius:8px;object-fit:contain;">
           </div>
           <div class="brandName">
             <strong>CyberField NeT</strong>
@@ -102,7 +97,7 @@
         <!-- Figma: ChatGPT Image cyber illustration 765×764 -->
         <div class="heroImage" aria-hidden="true">
           <img
-            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=720&q=85&auto=format&fit=crop"
+            src="/assets/images/hero-illustration.png"
             alt="Кіберпростір — ілюстрація"
             loading="eager"
           >
@@ -189,10 +184,7 @@
 
           <!-- Figma: ChatGPT Image 28 — абстрактна ілюстрація людини праворуч -->
           <div class="whyIllustration" aria-hidden="true">
-            <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=420&q=80&auto=format&fit=crop&crop=top"
-              alt=""
-            >
+            <img src="/assets/images/icon-person.png" alt="">
           </div>
         </div>
       </div>
@@ -319,7 +311,10 @@
 
           <article class="whoCard">
             <!-- Figma: icon ~130×107, 3D ілюстрація -->
-            <div class="whoIcon whoIcon--student" aria-hidden="true">🎓</div>
+            <div class="whoIcon whoIcon--student" aria-hidden="true">
+<!--                🎓-->
+                <img src="/assets/images/icon-student.png" alt="Students">
+            </div>
             <div class="whoBody">
               <h3>Студентам</h3>
               <p>Отримай практичну професію ще під час навчання.</p>
@@ -327,7 +322,9 @@
           </article>
 
           <article class="whoCard">
-            <div class="whoIcon whoIcon--switcher" aria-hidden="true">🔄</div>
+            <div class="whoIcon whoIcon--switcher" aria-hidden="true">
+                <img src="/assets/images/icon-switcher.png" alt="Students">
+            </div>
             <div class="whoBody">
               <h3>Світчерам</h3>
               <p>Зміни сферу та увійди в IT з нуля без хаосу.</p>
@@ -335,7 +332,9 @@
           </article>
 
           <article class="whoCard">
-            <div class="whoIcon whoIcon--worker" aria-hidden="true">💼</div>
+            <div class="whoIcon whoIcon--worker" aria-hidden="true">
+                <img src="/assets/images/icon-worker.png" alt="Students">
+            </div>
             <div class="whoBody">
               <h3>Тим, хто працює</h3>
               <p>Гнучкий графік і навчання у зручний час.</p>
@@ -343,7 +342,9 @@
           </article>
 
           <article class="whoCard">
-            <div class="whoIcon whoIcon--beginner" aria-hidden="true">🚀</div>
+            <div class="whoIcon whoIcon--beginner" aria-hidden="true">
+                <img src="/assets/images/icon-beginner.png" alt="Students">
+            </div>
             <div class="whoBody">
               <h3>Початківцям в IT</h3>
               <p>Є інтерес, але не знаєш, з чого почати — допоможемо.</p>
@@ -367,29 +368,7 @@
           <!-- Top: ілюстрація + заголовок поруч -->
           <div class="formatTopRow">
             <div class="formatIllustration" aria-hidden="true">
-              <!-- [CHANGE] SVG clipboard+clock замість png-заглушки -->
-              <svg width="170" height="170" viewBox="0 0 170 170" fill="none">
-                <!-- clipboard body -->
-                <rect x="28" y="30" width="100" height="124" rx="12" fill="#E8E0FF" stroke="#9A82DB" stroke-width="2.5"/>
-                <!-- clip tab -->
-                <rect x="54" y="20" width="48" height="20" rx="10" fill="#9A82DB"/>
-                <!-- lines -->
-                <line x1="46" y1="68" x2="110" y2="68" stroke="#9A82DB" stroke-width="2" stroke-linecap="round"/>
-                <line x1="46" y1="82" x2="90" y2="82" stroke="#9A82DB" stroke-width="2" stroke-linecap="round"/>
-                <!-- check 1 -->
-                <path d="M46 100L56 112L74 88" stroke="#6c5ce7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- check 2 -->
-                <path d="M46 122L56 134L74 110" stroke="#9A82DB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
-                <!-- clock circle overlay -->
-                <circle cx="130" cy="124" r="36" fill="white" stroke="#9A82DB" stroke-width="2.5"/>
-                <line x1="130" y1="108" x2="130" y2="124" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="130" y1="124" x2="144" y2="133" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="130" cy="124" r="4" fill="#6c5ce7"/>
-                <!-- sparkles -->
-                <circle cx="30" cy="52" r="3" fill="#D0BCFF"/>
-                <circle cx="138" cy="36" r="2" fill="#D0BCFF"/>
-                <circle cx="22" cy="120" r="2" fill="#D0BCFF"/>
-              </svg>
+                <img src="/assets/images/icon-format.png" alt="" width="170" height="170" >
             </div>
 
             <div class="formatTopText">
@@ -478,12 +457,7 @@
           <!-- Figma: logo 80×80 radius 16 + heading Volkhov 700 25px white -->
           <div class="footerBrand">
             <div class="footerLogo">
-              <svg width="62" height="62" viewBox="0 0 62 62" fill="none" aria-label="CyberField NeT logo">
-                <rect width="62" height="62" rx="16" fill="#1a2035"/>
-                <path d="M31 8L50 19V43L31 54L12 43V19L31 8Z" fill="#6c5ce7" opacity=".85"/>
-                <path d="M31 17L44 25V39L31 47L18 39V25L31 17Z" fill="#00C3D0" opacity=".7"/>
-                <path d="M31 26L37 30V38L31 42L25 38V30L31 26Z" fill="white"/>
-              </svg>
+                <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="62" height="62" style="border-radius:8px;object-fit:contain;">
             </div>
             <div class="footerBrandText">
               <!-- Figma: Volkhov 700 25px white -->
@@ -521,26 +495,26 @@
 
             <!-- Figma: кружки #D0BCFF, 41–45px -->
             <div class="socialRow">
-              <a href="#" aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61552758282863" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M12 2H9C7.9 2 7 2.9 7 4v3H4v3h3v8h3v-8h2.6L13 7H10V4.5C10 4.2 10.2 4 10.5 4H13V2h-1z" fill="#080809"/>
                 </svg>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href="https://www.instagram.com/cyberfield_net?igsh=OWxncTMzeHoxeHFz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect x="2" y="2" width="16" height="16" rx="4" stroke="#080808" stroke-width="1.8"/>
                   <circle cx="10" cy="10" r="4" stroke="#080808" stroke-width="1.8"/>
                   <circle cx="14.5" cy="5.5" r="1.2" fill="#080808"/>
                 </svg>
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/cyberfield-net/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect x="2" y="7" width="4" height="11" fill="#080808"/>
                   <circle cx="4" cy="4" r="2" fill="#080808"/>
                   <path d="M9 7h3.5v2c.6-1.2 2-2 3.5-2 2.5 0 3 2 3 3.5V18h-3.5v-7c0-.7 0-1.5-.8-1.5s-1.2.8-1.2 1.5v7H9V7z" fill="#080808"/>
                 </svg>
               </a>
-              <a href="#" aria-label="Telegram">
+              <a href="https://t.me/cyberpole" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M2 10L18 3 14 17 9 12 2 10z" stroke="#080808" stroke-width="1.8" stroke-linejoin="round"/>
                   <path d="M9 12L13.5 8" stroke="#080808" stroke-width="1.8" stroke-linecap="round"/>

@@ -354,7 +354,7 @@
   width: 100px;
   text-align: center;
   /* purple-toned filter to match Figma's purple 3D icons */
-  filter: hue-rotate(20deg) saturate(1.1);
+  /*filter: hue-rotate(20deg) saturate(1.1);*/
 }
 
 .whoBody {}
@@ -403,7 +403,7 @@
   display: flex;
   align-items: center;
   gap: 32px;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
 }
 
 .formatIllustration {
