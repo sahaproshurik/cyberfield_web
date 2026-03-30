@@ -37,13 +37,24 @@
         </a>
 
         <nav class="navLinks" aria-label="Навігація">
-          <a href="#courses">Курси</a>
-          <a href="#why">Про нас</a>
-          <a href="#login">Увійти</a>
+          <a href="pages/courses.html">Курси</a>
+          <a href="pages/about.html">Про нас</a>
+          <a href="pages/contacts.html">Контакти</a>
         </nav>
 
         <div class="navActions">
-          <a class="btn btn-outline" href="#register">Реєстрація</a>
+          <!-- Auth buttons — показуються динамічно через JS -->
+          <div id="authGuest" style="display:flex;gap:10px;align-items:center">
+            <a class="btn btn-outline" href="pages/login.html">Увійти</a>
+            <a class="btn btn-primary" href="pages/register.html">Реєстрація</a>
+          </div>
+
+          <!-- Показується коли залогінений -->
+          <div id="authUser" style="display:none;align-items:center;gap:12px">
+            <span id="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
+            <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
+          </div>
+
           <button class="lang" type="button" aria-label="Змінити мову">
             EN <span class="chev" aria-hidden="true">▾</span>
           </button>
@@ -444,6 +455,62 @@
 
 
     <!-- ═══════════════════════════════════════════════
+         PARTNERS — лого-стрічка + статистика + CTA
+         ═══════════════════════════════════════════════ -->
+    <section class="section" id="partners" aria-labelledby="partnersTitle" style="background:var(--violet-50)">
+      <div class="container">
+        <h2 class="title" id="partnersTitle">Партнери</h2>
+        <p class="subtitle">Компанії, які наймають наших випускників</p>
+
+        <!-- Stats strip -->
+        <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin:44px 0 48px;background:#fff;border:1.5px solid var(--line);border-radius:var(--radius2);">
+          <div style="display:flex;flex-direction:column;align-items:center;padding:28px 48px;border-right:1px solid var(--line);">
+            <span style="font-family:var(--fontHeading);font-size:48px;font-weight:700;color:var(--violet-600);letter-spacing:-.04em;line-height:1">12+</span>
+            <span style="font-family:var(--fontBody);font-size:15px;color:var(--c-text3);margin-top:6px">Компаній-партнерів</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding:28px 48px;border-right:1px solid var(--line);">
+            <span style="font-family:var(--fontHeading);font-size:48px;font-weight:700;color:var(--violet-600);letter-spacing:-.04em;line-height:1">80%</span>
+            <span style="font-family:var(--fontBody);font-size:15px;color:var(--c-text3);margin-top:6px;text-align:center">Знаходять роботу за 3 місяці</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding:28px 48px;border-right:1px solid var(--line);">
+            <span style="font-family:var(--fontHeading);font-size:48px;font-weight:700;color:var(--violet-600);letter-spacing:-.04em;line-height:1">500+</span>
+            <span style="font-family:var(--fontBody);font-size:15px;color:var(--c-text3);margin-top:6px">Випускників</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding:28px 48px;">
+            <span style="font-family:var(--fontHeading);font-size:48px;font-weight:700;color:var(--violet-600);letter-spacing:-.04em;line-height:1">3</span>
+            <span style="font-family:var(--fontBody);font-size:15px;color:var(--c-text3);margin-top:6px">Країни</span>
+          </div>
+        </div>
+
+        <!-- Logo grid -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px">
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">SoftServe</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">EPAM</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">Intellias</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">GlobalLogic</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">Ciklum</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">Sigma Software</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">DataArt</span></div>
+          <div style="background:#fff;border:1.5px solid var(--line);border-radius:var(--radius3);height:88px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--fontHeading);font-size:17px;font-weight:700;color:var(--c-text3)">Grid Dynamics</span></div>
+        </div>
+
+        <!-- Partner CTA -->
+        <div style="background:#fff;border:1.5px solid var(--violet-200);border-radius:var(--radius2);padding:44px 56px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+          <div>
+            <h3 style="font-size:clamp(20px,2.5vw,26px);margin-bottom:8px">Стати партнером</h3>
+            <p style="font-family:var(--fontBody);font-size:15px;line-height:24px;color:var(--c-text2);margin:0">Наймайте готових спеціалістів або пропонуйте стажування нашим студентам.<br>Ми підберемо формат співпраці під ваші потреби.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a class="btn btn-outline" href="pages/about.html#partners">Дізнатись більше</a>
+            <a class="btn btn-primary" href="pages/contacts.html">Написати нам</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════
          FOOTER — [CHANGE] Переписано соціальні іконки на inline SVG,
                   оновлено кольори строго з Figma
          ═══════════════════════════════════════════════ -->
@@ -475,7 +542,7 @@
           <!-- Figma: "Навчання" колонка Poppins 500 18px #9395A6, заголовок 20px white -->
           <div class="footerCol">
             <h4>Навчання</h4>
-            <a href="#courses">Курси</a>
+            <a href="pages/courses.html">Курси</a>
             <a href="#format">Формат навчання</a>
             <a href="#how">Як проходить навчання</a>
             <a href="#who">Для кого</a>
@@ -484,9 +551,9 @@
           <!-- Figma: "Компанія" колонка -->
           <div class="footerCol">
             <h4>Компанія</h4>
-            <a href="#why">Про нас</a>
-            <a href="#contact">Контакти</a>
-            <a href="#partners">Партнерство</a>
+            <a href="pages/about.html">Про нас</a>
+            <a href="pages/contacts.html">Контакти</a>
+            <a href="pages/about.html#partners">Партнерство</a>
           </div>
 
           <!-- Figma: Соцмережі + CTA box -->
@@ -557,6 +624,67 @@
         navLinks.classList.toggle('navLinks--open', !open);
       });
     }
+  </script>
+
+  <script>
+    // ── Auth state ──────────────────────────────────
+    const API = 'http://localhost:3000/api';
+
+    async function checkAuth() {
+      const token = localStorage.getItem('token');
+      const user  = JSON.parse(localStorage.getItem('user') || 'null');
+
+      if (!token || !user) {
+        showGuest();
+        return;
+      }
+
+      // Verify token is still valid
+      try {
+        const res = await fetch(`${API}/auth/me`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const data = await res.json();
+          showUser(data.user);
+        } else {
+          // Token expired — clean up
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          showGuest();
+        }
+      } catch {
+        // Server offline — show based on localStorage
+        user ? showUser(user) : showGuest();
+      }
+    }
+
+    function showGuest() {
+      document.getElementById('authGuest').style.display = 'flex';
+      document.getElementById('authUser').style.display  = 'none';
+    }
+
+    function showUser(user) {
+      document.getElementById('authGuest').style.display = 'none';
+      document.getElementById('authUser').style.display  = 'flex';
+      document.getElementById('userGreeting').textContent =
+        `👋 ${user.first_name}`;
+    }
+
+    async function logout() {
+      try {
+        await fetch(`${API}/auth/logout`, {
+          method: 'POST',
+          credentials: 'include',
+        });
+      } catch {}
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      showGuest();
+    }
+
+    checkAuth();
   </script>
 
 </body>

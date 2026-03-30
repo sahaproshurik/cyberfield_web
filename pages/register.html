@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Реєстрація — CyberField NeT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+  <style>
+    body { background: var(--violet-50); min-height: 100vh; display: flex; flex-direction: column; }
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+
+    .authCard {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: var(--shadow2);
+    }
+    @media (max-width: 560px) { .authCard { padding: 36px 22px; } }
+
+    .authLogo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .authLogoIcon {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      background: #0b0f1a;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow2);
+      margin-bottom: 12px;
+    }
+    .authLogo h1 { font-size: 22px; letter-spacing: -0.04em; margin-bottom: 4px; }
+    .authLogo p { font-family: var(--fontBody); font-size: 15px; color: var(--c-text3); margin: 0; }
+
+    .authTitle { font-size: 26px; letter-spacing: -0.03em; margin-bottom: 6px; text-align: center; }
+    .authSubtitle { font-family: var(--fontBody); font-size: 15px; color: var(--c-text3); text-align: center; margin-bottom: 28px; }
+
+    /* ── Steps indicator ── */
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .stepDot {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--fontUI);
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--line);
+      color: var(--muted);
+      transition: background .25s, color .25s;
+    }
+    .step.active .stepDot { background: var(--violet-500); color: #fff; }
+    .step.done .stepDot { background: var(--cyan); color: #fff; }
+    .stepLabel {
+      font-family: var(--fontUI);
+      font-size: 11px;
+      color: var(--c-text4);
+      white-space: nowrap;
+    }
+    .step.active .stepLabel { color: var(--violet-600); font-weight: 600; }
+    .stepLine {
+      flex: 1;
+      height: 2px;
+      background: var(--line);
+      margin: 0 8px;
+      margin-bottom: 18px;
+      min-width: 40px;
+      transition: background .25s;
+    }
+    .stepLine.done { background: var(--cyan); }
+
+    /* ── Form ── */
+    .formGroup { margin-bottom: 16px; }
+    .formGroup label {
+      display: block;
+      font-family: var(--fontUI);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--c-text2);
+      margin-bottom: 7px;
+    }
+    .formGroup label .req { color: var(--violet-600); margin-left: 2px; }
+
+    .inputWrap { position: relative; }
+    .formGroup input,
+    .formGroup select {
+      width: 100%;
+      font-family: var(--fontBody);
+      font-size: 16px;
+      color: var(--text);
+      background: var(--violet-50);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius3);
+      padding: 12px 44px 12px 16px;
+      outline: none;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+      appearance: none;
+    }
+    .formGroup input::placeholder { color: var(--c-text4); }
+    .formGroup input:focus,
+    .formGroup select:focus {
+      border-color: var(--violet-500);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(108,92,231,.12);
+    }
+    .inputIcon {
+      position: absolute;
+      right: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .formRow { grid-template-columns: 1fr; } }
+
+    /* ── Password strength ── */
+    .passStrength {
+      margin-top: 8px;
+      display: flex;
+      gap: 5px;
+    }
+    .passBar {
+      height: 4px;
+      flex: 1;
+      border-radius: 2px;
+      background: var(--line);
+      transition: background .25s;
+    }
+    .passBarLabel {
+      font-family: var(--fontUI);
+      font-size: 12px;
+      color: var(--c-text4);
+      margin-top: 5px;
+    }
+
+    /* ── Agree row ── */
+    .agreeRow {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .agreeRow input[type="checkbox"] {
+      width: 18px; height: 18px;
+      margin-top: 2px;
+      accent-color: var(--violet-500);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .agreeRow label {
+      font-family: var(--fontBody);
+      font-size: 14px;
+      color: var(--c-text2);
+      line-height: 22px;
+      cursor: pointer;
+    }
+    .agreeRow label a { color: var(--violet-600); }
+    .agreeRow label a:hover { text-decoration: underline; }
+
+    /* ── Buttons ── */
+    .stepBtns { display: flex; gap: 12px; }
+    .stepBtns .btn { flex: 1; padding: 14px; font-size: 17px; }
+
+    /* ── Divider ── */
+    .authDivider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 20px 0;
+      font-family: var(--fontUI);
+      font-size: 13px;
+      color: var(--c-text4);
+    }
+    .authDivider::before, .authDivider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .socialLogin { display: flex; gap: 10px; }
+    .socialBtn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px;
+      border-radius: var(--radius3);
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-family: var(--fontUI);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      text-decoration: none;
+    }
+    .socialBtn:hover { background: var(--violet-50); border-color: var(--violet-300); }
+
+    .authFooterLink {
+      text-align: center;
+      margin-top: 22px;
+      font-family: var(--fontBody);
+      font-size: 14px;
+      color: var(--c-text3);
+    }
+    .authFooterLink a { color: var(--violet-600); font-weight: 500; }
+    .authFooterLink a:hover { text-decoration: underline; }
+
+    /* ── Field error ── */
+    .fieldError { font-family: var(--fontBody); font-size: 13px; color: #e17055; margin-top: 5px; display: none; }
+    .formGroup.hasError input { border-color: #e17055; }
+    .formGroup.hasError .fieldError { display: block; }
+
+    /* ── Step panels ── */
+    .stepPanel { display: none; }
+    .stepPanel.active { display: block; }
+
+    /* ── Success ── */
+    .successPanel {
+      display: none;
+      text-align: center;
+      padding: 16px 0;
+    }
+    .successPanel.active { display: block; }
+    .successCircle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(0,195,208,.12);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .successPanel h3 { font-size: 24px; margin-bottom: 10px; }
+    .successPanel p { font-family: var(--fontBody); font-size: 16px; line-height: 26px; color: var(--c-text2); margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container">
+      <div class="navRow">
+        <a class="brand" href="../index.html" aria-label="CyberField NeT">
+          <div class="brandLogo">
+            <img src="/assets/images/logo.png" alt="logo" width="44" height="44" style="border-radius:8px;object-fit:contain;">
+          </div>
+          <div class="brandName">
+            <strong>CyberField NeT</strong>
+            <span>Онлайн-курси IT-профессій</span>
+          </div>
+        </a>
+        <div class="navActions">
+          <a class="btn btn-outline" href="login.html">Увійти</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="authCard">
+
+      <div class="authLogo">
+        <div class="authLogoIcon">
+          <img src="/assets/images/logo.png" alt="logo" width="36" height="36" style="border-radius:6px;object-fit:contain;">
+        </div>
+        <h1>CyberField NeT</h1>
+        <p>Онлайн-курси IT-профессій</p>
+      </div>
+
+      <h2 class="authTitle">Створити акаунт</h2>
+      <p class="authSubtitle">Заповни форму і починай навчання вже сьогодні</p>
+
+      <!-- Steps -->
+      <div class="steps" id="stepsBar">
+        <div class="step active" id="s1">
+          <div class="stepDot">1</div>
+          <div class="stepLabel">Особисті дані</div>
+        </div>
+        <div class="stepLine" id="line12"></div>
+        <div class="step" id="s2">
+          <div class="stepDot">2</div>
+          <div class="stepLabel">Безпека</div>
+        </div>
+        <div class="stepLine" id="line23"></div>
+        <div class="step" id="s3">
+          <div class="stepDot">3</div>
+          <div class="stepLabel">Готово</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Personal info -->
+      <div class="stepPanel active" id="panel1">
+
+        <div class="formRow">
+          <div class="formGroup" id="fnameGroup">
+            <label for="fname">Ім'я <span class="req">*</span></label>
+            <div class="inputWrap">
+              <input type="text" id="fname" name="fname" placeholder="Олексій" required autocomplete="given-name">
+            </div>
+            <p class="fieldError">Введи своє ім'я</p>
+          </div>
+          <div class="formGroup" id="lnameGroup">
+            <label for="lname">Прізвище <span class="req">*</span></label>
+            <div class="inputWrap">
+              <input type="text" id="lname" name="lname" placeholder="Коваль" required autocomplete="family-name">
+            </div>
+            <p class="fieldError">Введи прізвище</p>
+          </div>
+        </div>
+
+        <div class="formGroup" id="emailGroup">
+          <label for="reg_email">Email <span class="req">*</span></label>
+          <div class="inputWrap">
+            <input type="email" id="reg_email" name="email" placeholder="you@example.com" required autocomplete="email">
+            <span class="inputIcon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><polyline points="2,4 9,10 16,4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+          <p class="fieldError">Введи коректний email</p>
+        </div>
+
+        <div class="formGroup">
+          <label for="phone">Телефон</label>
+          <div class="inputWrap">
+            <input type="tel" id="phone" name="phone" placeholder="+380 xx xxx xx xx" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="formGroup">
+          <label for="course_interest">Мене цікавить напрям</label>
+          <div class="inputWrap">
+            <select id="course_interest" name="course_interest" style="padding-right:36px">
+              <option value="">— Обери напрям —</option>
+              <option>Frontend-розробник</option>
+              <option>Backend-розробник (Python)</option>
+              <option>UI/UX Дизайнер</option>
+              <option>Data Analyst</option>
+              <option>Кібербезпека</option>
+              <option>AI / Machine Learning</option>
+              <option>Ще не визначився</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="stepBtns" style="margin-top:6px">
+          <button type="button" class="btn btn-primary" onclick="goStep(2)">Далі →</button>
+        </div>
+
+        <div class="authDivider">або зареєструватись через</div>
+        <div class="socialLogin">
+          <a class="socialBtn" href="#">
+            <svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.2c0-.7-.1-1.3-.2-2H10v3.8h5.4c-.2 1.2-1 2.2-2 2.9v2.4h3.3c1.9-1.8 3-4.4 3-7.1z" fill="#4285F4"/><path d="M10 20c2.7 0 5-1 6.7-2.7l-3.3-2.4c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2H1v2.5C2.7 17.8 6.1 20 10 20z" fill="#34A853"/><path d="M4.4 11.7c-.2-.6-.3-1.1-.3-1.7s.1-1.2.3-1.7V5.8H1C.4 7 0 8.5 0 10s.4 3 1 4.2l3.4-2.5z" fill="#FBBC04"/><path d="M10 3.8c1.5 0 2.8.5 3.8 1.5l2.8-2.8C14.9.9 12.7 0 10 0 6.1 0 2.7 2.2 1 5.8l3.4 2.5c.8-2.4 3-4.5 5.6-4.5z" fill="#EA4335"/></svg>
+            Google
+          </a>
+          <a class="socialBtn" href="#">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M14 2h-3c-1.1 0-2 .9-2 2v3H6v3h3v8h3v-8h2.6L15 7H12V4.5c0-.3.2-.5.5-.5H15V2h-1z" stroke="#1877f2" stroke-width="1.5"/></svg>
+            Facebook
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Step 2: Password -->
+      <div class="stepPanel" id="panel2">
+
+        <div class="formGroup" id="passGroup">
+          <label for="reg_pass">Пароль <span class="req">*</span></label>
+          <div class="inputWrap">
+            <input type="password" id="reg_pass" name="password" placeholder="Мінімум 8 символів" required autocomplete="new-password" oninput="checkStrength()">
+            <span class="inputIcon" onclick="toggleRegPass()" role="button" tabindex="0" aria-label="Показати пароль">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="9" rx="7" ry="4" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+          </div>
+          <div class="passStrength">
+            <div class="passBar" id="bar1"></div>
+            <div class="passBar" id="bar2"></div>
+            <div class="passBar" id="bar3"></div>
+            <div class="passBar" id="bar4"></div>
+          </div>
+          <p class="passBarLabel" id="strengthLabel">Введи пароль</p>
+          <p class="fieldError">Пароль має бути не менше 8 символів</p>
+        </div>
+
+        <div class="formGroup" id="pass2Group">
+          <label for="reg_pass2">Підтвердити пароль <span class="req">*</span></label>
+          <div class="inputWrap">
+            <input type="password" id="reg_pass2" name="password2" placeholder="Повтори пароль" required autocomplete="new-password">
+          </div>
+          <p class="fieldError">Паролі не збігаються</p>
+        </div>
+
+        <div class="agreeRow">
+          <input type="checkbox" id="agree" name="agree">
+          <label for="agree">
+            Я погоджуюся з <a href="#">Умовами використання</a> та <a href="#">Політикою конфіденційності</a> CyberField NeT
+          </label>
+        </div>
+
+        <div class="stepBtns">
+          <button type="button" class="btn btn-outline" onclick="goStep(1)">← Назад</button>
+          <button type="button" class="btn btn-primary" onclick="goStep(3)">Зареєструватись</button>
+        </div>
+
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="stepPanel successPanel" id="panel3">
+        <div class="successCircle">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+            <polyline points="6,15 12,21 24,9" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Акаунт створено!</h3>
+        <p>Вітаємо! Ми надіслали листа з підтвердженням на твій email.<br>Перевір пошту і натисни посилання для активації.</p>
+        <a class="btn btn-primary" href="courses.html" style="display:inline-block;padding:14px 36px">Переглянути курси</a>
+      </div>
+
+      <p class="authFooterLink" id="loginLink">Вже є акаунт? <a href="login.html">Увійти</a></p>
+
+    </div>
+  </main>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+
+    let currentStep = 1;
+
+    async function goStep(step) {
+      if (step > currentStep && !validateStep(currentStep)) return;
+
+      // Step 2 → 3: call the API
+      if (step === 3 && currentStep === 2) {
+        const btn = document.querySelector('#panel2 .btn-primary');
+        btn.textContent = 'Реєстрація...';
+        btn.disabled = true;
+
+        const payload = {
+          first_name:      document.getElementById('fname').value.trim(),
+          last_name:       document.getElementById('lname').value.trim(),
+          email:           document.getElementById('reg_email').value.trim(),
+          phone:           document.getElementById('phone').value.trim() || undefined,
+          course_interest: document.getElementById('course_interest').value || undefined,
+          password:        document.getElementById('reg_pass').value,
+        };
+
+        try {
+          const res  = await fetch(`${API}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            // Show error under email field on step 1
+            const msg = data.error || (data.errors && data.errors[0]?.msg) || 'Помилка реєстрації';
+            if (msg.includes('email')) {
+              // Go back to step 1 and show email error
+              currentStep = 1;
+              updateSteps();
+              document.getElementById('emailGroup').classList.add('hasError');
+              document.querySelector('#emailGroup .fieldError').textContent = msg;
+            } else {
+              alert(msg);
+            }
+            btn.textContent = 'Зареєструватись';
+            btn.disabled = false;
+            return;
+          }
+
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+        } catch (err) {
+          alert('Помилка з\'єднання з сервером');
+          btn.textContent = 'Зареєструватись';
+          btn.disabled = false;
+          return;
+        }
+
+        btn.textContent = 'Зареєструватись';
+        btn.disabled = false;
+      }
+
+      currentStep = step;
+      updateSteps();
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        let ok = true;
+        const fname = document.getElementById('fname').value.trim();
+        const lname = document.getElementById('lname').value.trim();
+        const email = document.getElementById('reg_email').value.trim();
+        const fnG = document.getElementById('fnameGroup');
+        const lnG = document.getElementById('lnameGroup');
+        const emG = document.getElementById('emailGroup');
+        fnG.classList.remove('hasError'); lnG.classList.remove('hasError'); emG.classList.remove('hasError');
+        if (!fname) { fnG.classList.add('hasError'); ok = false; }
+        if (!lname) { lnG.classList.add('hasError'); ok = false; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emG.classList.add('hasError'); ok = false; }
+        return ok;
+      }
+      if (step === 2) {
+        let ok = true;
+        const pass  = document.getElementById('reg_pass').value;
+        const pass2 = document.getElementById('reg_pass2').value;
+        const agree = document.getElementById('agree').checked;
+        const pG  = document.getElementById('passGroup');
+        const p2G = document.getElementById('pass2Group');
+        pG.classList.remove('hasError'); p2G.classList.remove('hasError');
+        if (pass.length < 8) { pG.classList.add('hasError'); ok = false; }
+        if (pass !== pass2 || !pass2) { p2G.classList.add('hasError'); ok = false; }
+        if (!agree) { alert('Будь ласка, погодься з умовами використання'); ok = false; }
+        return ok;
+      }
+      return true;
+    }
+
+    function updateSteps() {
+      for (let i = 1; i <= 3; i++) {
+        const s = document.getElementById('s' + i);
+        s.classList.remove('active', 'done');
+        if (i < currentStep) s.classList.add('done');
+        if (i === currentStep) s.classList.add('active');
+        document.querySelectorAll('.stepPanel').forEach((p, idx) => {
+          p.classList.remove('active');
+          if (idx + 1 === currentStep) p.classList.add('active');
+        });
+      }
+      ['12','23'].forEach((pair, idx) => {
+        const line = document.getElementById('line' + pair);
+        line.classList.toggle('done', currentStep > idx + 1);
+      });
+      if (currentStep === 3) {
+        document.getElementById('loginLink').style.display = 'none';
+        document.getElementById('stepsBar').style.display = 'none';
+        document.querySelector('.authTitle').style.display = 'none';
+        document.querySelector('.authSubtitle').style.display = 'none';
+        document.getElementById('panel3').classList.add('active');
+      }
+    }
+
+    function toggleRegPass() {
+      const input = document.getElementById('reg_pass');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function checkStrength() {
+      const val = document.getElementById('reg_pass').value;
+      const bars = ['bar1','bar2','bar3','bar4'];
+      const colors = ['#e17055','#fdcb6e','#00b894','#6c5ce7'];
+      const labels = ['','Слабкий','Нормальний','Сильний','Відмінний'];
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      bars.forEach((id, i) => {
+        document.getElementById(id).style.background = i < score ? colors[score - 1] : 'var(--line)';
+      });
+      document.getElementById('strengthLabel').textContent = val ? labels[score] : 'Введи пароль';
+      document.getElementById('strengthLabel').style.color = score > 0 ? colors[score - 1] : 'var(--c-text4)';
+    }
+  </script>
+
+</body>
+</html>

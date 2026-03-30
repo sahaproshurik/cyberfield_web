@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Про нас — CyberField NeT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+  <style>
+    /* ── Page hero ── */
+    .pageHero {
+      background: linear-gradient(135deg, var(--violet-50) 0%, #fff 60%);
+      padding: 72px 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pageHero::after {
+      content: '';
+      position: absolute;
+      right: -100px; top: -120px;
+      width: 480px; height: 480px;
+      background: var(--heroBlob);
+      border-radius: 50%;
+      opacity: .45;
+      pointer-events: none;
+    }
+    .pageHeroBreadcrumb {
+      font-family: var(--fontUI);
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .pageHeroBreadcrumb a { color: var(--violet-600); }
+    .pageHeroBreadcrumb a:hover { text-decoration: underline; }
+    .pageHeroTitle {
+      font-family: var(--fontHeading);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: -0.04em;
+      color: var(--c-text1);
+      margin: 0 0 16px;
+    }
+    .pageHeroDesc {
+      font-family: var(--fontBody);
+      font-size: 18px;
+      line-height: 30px;
+      color: var(--c-text2);
+      max-width: 560px;
+      margin: 0;
+    }
+
+    /* ── Mission block ── */
+    .missionBlock {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .missionBlock { grid-template-columns: 1fr; gap: 40px; } }
+
+    .missionText h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      margin-bottom: 20px;
+      letter-spacing: -0.04em;
+    }
+    .missionText p {
+      font-family: var(--fontBody);
+      font-size: 17px;
+      line-height: 30px;
+      color: var(--c-text2);
+      margin-bottom: 16px;
+    }
+    .missionText p:last-child { margin-bottom: 0; }
+
+    .missionVisual {
+      background: var(--violet-50);
+      border-radius: var(--radius2);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .missionStat {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .missionStatNum {
+      font-family: var(--fontHeading);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--violet-600);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      min-width: 100px;
+    }
+    .missionStatLabel {
+      font-family: var(--fontBody);
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--c-text2);
+    }
+    .missionStatLabel strong {
+      display: block;
+      font-size: 18px;
+      color: var(--c-text1);
+      margin-bottom: 2px;
+    }
+
+    /* ── Values ── */
+    .valuesGrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) { .valuesGrid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .valuesGrid { grid-template-columns: 1fr; } }
+
+    .valueCard {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 28px 24px;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+    }
+    .valueCard:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadowSoft);
+      border-color: var(--violet-300);
+    }
+    .valueIcon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--violet-100);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .valueCard h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .valueCard p {
+      font-family: var(--fontBody);
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--c-text2);
+      margin: 0;
+    }
+
+    /* ── Team ── */
+    .teamSection { background: var(--violet-50); }
+    .teamGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) { .teamGrid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .teamGrid { grid-template-columns: 1fr 1fr; gap: 16px; } }
+
+    .teamCard {
+      background: #fff;
+      border-radius: var(--radius2);
+      overflow: hidden;
+      text-align: center;
+      box-shadow: var(--shadow2);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .teamCard:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+    .teamAvatar {
+      height: 140px;
+      background: linear-gradient(135deg, var(--violet-200) 0%, var(--violet-300) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--fontHeading);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--violet-700);
+    }
+    .teamCardBody { padding: 18px 14px 20px; }
+    .teamCardBody h3 {
+      font-size: 17px;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+    .teamRole {
+      font-family: var(--fontUI);
+      font-size: 13px;
+      color: var(--violet-600);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .teamCardBody p {
+      font-family: var(--fontBody);
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--c-text3);
+      margin: 0;
+    }
+
+    /* ── Partners ── */
+    .partnersSection {}
+
+    .statsRow {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin: 48px 0 56px;
+      flex-wrap: wrap;
+    }
+    .statPill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 40px;
+      border-right: 1px solid var(--line);
+    }
+    .statPill:last-child { border-right: none; }
+    .statPillNum {
+      font-family: var(--fontHeading);
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--violet-600);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .statPillLabel {
+      font-family: var(--fontBody);
+      font-size: 15px;
+      color: var(--c-text3);
+      margin-top: 6px;
+      text-align: center;
+    }
+    @media (max-width: 640px) {
+      .statPill { padding: 18px 24px; border-right: none; border-bottom: 1px solid var(--line); }
+      .statPill:last-child { border-bottom: none; }
+    }
+
+    .partnerLogos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 768px) { .partnerLogos { grid-template-columns: 1fr 1fr; } }
+
+    .partnerLogoCard {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius3);
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .partnerLogoCard:hover {
+      border-color: var(--violet-300);
+      box-shadow: var(--shadowSoft);
+    }
+    .partnerLogoCard span {
+      font-family: var(--fontHeading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--c-text3);
+      letter-spacing: -0.02em;
+    }
+
+    .partnerCta {
+      background: var(--violet-50);
+      border: 1.5px solid var(--violet-200);
+      border-radius: var(--radius2);
+      padding: 44px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    @media (max-width: 768px) { .partnerCta { flex-direction: column; padding: 36px 28px; text-align: center; } }
+    .partnerCta h3 { font-size: clamp(20px, 2.5vw, 26px); margin-bottom: 8px; }
+    .partnerCta p { font-family: var(--fontBody); font-size: 15px; line-height: 24px; color: var(--c-text2); margin: 0; }
+    .partnerCtaActions { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 768px) { .partnerCtaActions { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="top">
+    <div class="container">
+      <div class="navRow">
+        <a class="brand" href="../index.html" aria-label="CyberField NeT">
+          <div class="brandLogo">
+            <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="44" height="44" style="border-radius:8px;object-fit:contain;">
+          </div>
+          <div class="brandName">
+            <strong>CyberField NeT</strong>
+            <span>Онлайн-курси IT-профессій</span>
+          </div>
+        </a>
+        <nav class="navLinks" aria-label="Навігація">
+          <a href="courses.html">Курси</a>
+          <a href="about.html" style="color:var(--violet-600)">Про нас</a>
+          <a href="contacts.html">Контакти</a>
+        </nav>
+        <div class="navActions">
+          <div class="authGuest" style="display:flex;gap:10px;align-items:center">
+            <a class="btn btn-outline" href="login.html">Увійти</a>
+            <a class="btn btn-primary" href="register.html">Реєстрація</a>
+          </div>
+          <div class="authUser" style="display:none;align-items:center;gap:12px">
+            <span class="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
+            <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
+          </div>
+
+          <button class="lang" type="button" aria-label="Змінити мову">EN <span class="chev">▾</span></button>
+        </div>
+        <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <div class="pageHero">
+      <div class="container">
+        <p class="pageHeroBreadcrumb"><a href="../index.html">Головна</a> / Про нас</p>
+        <h1 class="pageHeroTitle">Про CyberField NeT</h1>
+        <p class="pageHeroDesc">Ми — онлайн-школа IT-профессій, яка допомагає людям змінити своє майбутнє через практичне навчання та підтримку реального ментора.</p>
+      </div>
+    </div>
+
+    <!-- MISSION -->
+    <section class="section" aria-labelledby="missionTitle">
+      <div class="container">
+        <div class="missionBlock">
+          <div class="missionText">
+            <h2 id="missionTitle">Наша місія</h2>
+            <p>CyberField NeT виник з простої ідеї: кожна людина може увійти в IT, якщо їй дати правильний шлях. Ми не просто передаємо знання — ми будуємо кар'єри.</p>
+            <p>Наші курси побудовані на реальних кейсах із практики. Ніякої "сухої теорії" без застосування — лише те, що дійсно потрібно на першій роботі.</p>
+            <p>Більше 500 випускників вже працюють у провідних IT-компаніях. І це тільки початок.</p>
+            <a class="btn btn-primary" href="courses.html" style="margin-top:12px">Переглянути курси</a>
+          </div>
+          <div class="missionVisual">
+            <div class="missionStat">
+              <div class="missionStatNum">500+</div>
+              <div class="missionStatLabel"><strong>Випускників</strong>Вже працюють у IT</div>
+            </div>
+            <hr style="border-color:var(--line)">
+            <div class="missionStat">
+              <div class="missionStatNum">80%</div>
+              <div class="missionStatLabel"><strong>Знаходять роботу</strong>Протягом 3 місяців після курсу</div>
+            </div>
+            <hr style="border-color:var(--line)">
+            <div class="missionStat">
+              <div class="missionStatNum">12+</div>
+              <div class="missionStatLabel"><strong>Компаній-партнерів</strong>Де наймають наших студентів</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="section" id="why" aria-labelledby="valuesTitle">
+      <div class="dotsDecor dotsDecorTR" aria-hidden="true"></div>
+      <div class="container">
+        <h2 class="title" id="valuesTitle">Наші цінності</h2>
+        <p class="subtitle">Те, що відрізняє нас від інших шкіл</p>
+        <div class="valuesGrid">
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <circle cx="13" cy="10" r="5" stroke="var(--violet-600)" stroke-width="2"/>
+                <path d="M5 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--violet-600)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Людяність</h3>
+            <p>Ми бачимо кожного студента як особистість, а не як "потік". Ментор завжди поруч.</p>
+          </div>
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M13 3l2.5 5 5.5.8-4 3.9.95 5.5L13 15.6l-4.95 2.6.95-5.5-4-3.9 5.5-.8L13 3z" stroke="var(--violet-600)" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Якість</h3>
+            <p>Наші ментори — практикуючі спеціалісти з індустрії. Матеріали оновлюються щосезону.</p>
+          </div>
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <polyline points="4,18 9,12 14,15 21,7" stroke="var(--violet-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Результат</h3>
+            <p>Готуємо до реальних вимог ринку. Кожен курс закінчується проєктом у портфоліо.</p>
+          </div>
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <circle cx="13" cy="13" r="9" stroke="var(--violet-600)" stroke-width="2"/>
+                <line x1="13" y1="8" x2="13" y2="13" stroke="var(--violet-600)" stroke-width="2" stroke-linecap="round"/>
+                <line x1="13" y1="13" x2="17" y2="16" stroke="var(--violet-600)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Гнучкість</h3>
+            <p>Навчайся у зручний час — вдень, ввечері або у вихідні. Без жорсткого розкладу.</p>
+          </div>
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M4 20l5-5m0 0l4-4m-4 4l-4 4m4-4l4-4m0 0l5-5m-5 5l4 4m1-9l4-4" stroke="var(--violet-600)" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="9" cy="9" r="3" stroke="var(--violet-600)" stroke-width="2"/>
+                <circle cx="18" cy="18" r="3" stroke="var(--violet-600)" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>Спільнота</h3>
+            <p>Закрита група студентів, де можна знайти однодумців, партнерів або першу команду.</p>
+          </div>
+
+          <div class="valueCard">
+            <div class="valueIcon">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M13 3C13 3 6 8 6 14a7 7 0 0 0 14 0c0-6-7-11-7-11z" stroke="var(--violet-600)" stroke-width="2" stroke-linejoin="round"/>
+                <polyline points="10,14 12,16 16,12" stroke="var(--violet-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Чесність</h3>
+            <p>Говоримо прямо про ринок, зарплати та реальні перспективи — без рожевих окулярів.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section teamSection" aria-labelledby="teamTitle">
+      <div class="container">
+        <h2 class="title" id="teamTitle">Наша команда</h2>
+        <p class="subtitle">Практикуючі спеціалісти, які самі пройшли цей шлях</p>
+        <div class="teamGrid">
+
+          <div class="teamCard">
+            <div class="teamAvatar">О</div>
+            <div class="teamCardBody">
+              <h3>Олексій Коваль</h3>
+              <p class="teamRole">Засновник & CEO</p>
+              <p>8 років у розробці, колишній тімлід у fintech-стартапі</p>
+            </div>
+          </div>
+
+          <div class="teamCard">
+            <div class="teamAvatar" style="background:linear-gradient(135deg,#cff9fc,#00c3d0);color:#0e7a82">М</div>
+            <div class="teamCardBody">
+              <h3>Марина Савченко</h3>
+              <p class="teamRole">Head of Education</p>
+              <p>PhD з педагогіки, розробила 4 онлайн-курси для великих EdTech</p>
+            </div>
+          </div>
+
+          <div class="teamCard">
+            <div class="teamAvatar" style="background:linear-gradient(135deg,#ffd6e7,#e84393);color:#8b0048">А</div>
+            <div class="teamCardBody">
+              <h3>Андрій Мельник</h3>
+              <p class="teamRole">Lead Frontend Mentor</p>
+              <p>Senior React Dev, ex-SoftServe, 5 років менторства</p>
+            </div>
+          </div>
+
+          <div class="teamCard">
+            <div class="teamAvatar" style="background:linear-gradient(135deg,#e8f4fd,#3b8bd4);color:#0c447c">Н</div>
+            <div class="teamCardBody">
+              <h3>Наталія Гриценко</h3>
+              <p class="teamRole">Data Science Mentor</p>
+              <p>ML-інженер, Kaggle Grandmaster, ex-EPAM</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section class="section" id="partners" aria-labelledby="partnersTitle">
+      <div class="container">
+        <h2 class="title" id="partnersTitle">Партнери</h2>
+        <p class="subtitle">Компанії, які наймають наших випускників та підтримують навчання</p>
+
+        <!-- Stats -->
+        <div class="statsRow">
+          <div class="statPill">
+            <div class="statPillNum">12+</div>
+            <div class="statPillLabel">Компаній-партнерів</div>
+          </div>
+          <div class="statPill">
+            <div class="statPillNum">80%</div>
+            <div class="statPillLabel">Випускників знаходять<br>роботу за 3 місяці</div>
+          </div>
+          <div class="statPill">
+            <div class="statPillNum">3</div>
+            <div class="statPillLabel">Країни присутності</div>
+          </div>
+          <div class="statPill">
+            <div class="statPillNum">500+</div>
+            <div class="statPillLabel">Студентів навчились</div>
+          </div>
+        </div>
+
+        <!-- Logo grid -->
+        <div class="partnerLogos">
+          <div class="partnerLogoCard"><span>SoftServe</span></div>
+          <div class="partnerLogoCard"><span>EPAM</span></div>
+          <div class="partnerLogoCard"><span>Intellias</span></div>
+          <div class="partnerLogoCard"><span>GlobalLogic</span></div>
+          <div class="partnerLogoCard"><span>Ciklum</span></div>
+          <div class="partnerLogoCard"><span>Sigma Software</span></div>
+          <div class="partnerLogoCard"><span>DataArt</span></div>
+          <div class="partnerLogoCard"><span>Grid Dynamics</span></div>
+        </div>
+
+        <!-- Partner CTA -->
+        <div class="partnerCta">
+          <div>
+            <h3>Стати партнером</h3>
+            <p>Наймайте готових спеціалістів або пропонуйте стажування нашим студентам.<br>Ми підберемо формат співпраці під ваші потреби.</p>
+          </div>
+          <div class="partnerCtaActions">
+            <a class="btn btn-outline" href="contacts.html">Дізнатись більше</a>
+            <a class="btn btn-primary" href="contacts.html">Написати нам</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="container">
+      <div class="footerGrid">
+        <div class="footerBrand">
+          <div class="footerLogo">
+            <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="62" height="62" style="border-radius:8px;object-fit:contain;">
+          </div>
+          <div class="footerBrandText">
+            <h3>CyberField NeT</h3>
+            <p class="footerBrandSub">Онлайн-курси IT-профессій</p>
+            <p><strong>CyberField NeT — онлайн-курси IT-профессій з практикою та підтримкою менторів.</strong><br>Вчись у своєму темпі або обирай повне занурення.</p>
+          </div>
+        </div>
+        <div class="footerCol">
+          <h4>Навчання</h4>
+          <a href="courses.html">Курси</a>
+          <a href="../index.html#format">Формат навчання</a>
+          <a href="../index.html#how">Як проходить навчання</a>
+          <a href="../index.html#who">Для кого</a>
+        </div>
+        <div class="footerCol">
+          <h4>Компанія</h4>
+          <a href="about.html">Про нас</a>
+          <a href="contacts.html">Контакти</a>
+          <a href="about.html#partners">Партнерство</a>
+        </div>
+        <div class="footerSocials">
+          <h4>Ми в соцмережах</h4>
+          <div class="socialRow">
+            <a href="https://www.facebook.com/profile.php?id=61552758282863" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 2H9C7.9 2 7 2.9 7 4v3H4v3h3v8h3v-8h2.6L13 7H10V4.5C10 4.2 10.2 4 10.5 4H13V2h-1z" fill="#080809"/></svg>
+            </a>
+            <a href="https://www.instagram.com/cyberfield_net" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="4" stroke="#080808" stroke-width="1.8"/><circle cx="10" cy="10" r="4" stroke="#080808" stroke-width="1.8"/><circle cx="14.5" cy="5.5" r="1.2" fill="#080808"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/cyberfield-net/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="7" width="4" height="11" fill="#080808"/><circle cx="4" cy="4" r="2" fill="#080808"/><path d="M9 7h3.5v2c.6-1.2 2-2 3.5-2 2.5 0 3 2 3 3.5V18h-3.5v-7c0-.7 0-1.5-.8-1.5s-1.2.8-1.2 1.5v7H9V7z" fill="#080808"/></svg>
+            </a>
+            <a href="https://t.me/cyberpole" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10L18 3 14 17 9 12 2 10z" stroke="#080808" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L13.5 8" stroke="#080808" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footerCta">
+            <p>Хочеш підібрати напрям під себе?<br>Напиши — підкажемо старт.</p>
+            <a class="btn btn-consult" href="contacts.html">Отримати консультацію</a>
+          </div>
+        </div>
+      </div>
+      <div class="footerBottom">
+        <div>© 2026 CyberField NeT. Усі права захищені.</div>
+        <div class="footerLinks">
+          <a href="#">Конфіденційність</a>
+          <a href="#">Умови</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('burgerBtn');
+    const navLinks = document.querySelector('.navLinks');
+    if (btn && navLinks) {
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        navLinks.classList.toggle('navLinks--open', !open);
+      });
+    }
+  </script>
+
+
+  <script>
+    const _API = "http://localhost:3000/api";
+    async function checkAuth() {
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      if (!token || !user) { showGuest(); return; }
+      try {
+        const res = await fetch(_API + "/auth/me", { headers: { "Authorization": "Bearer " + token }, credentials: "include" });
+        if (res.ok) { showUser((await res.json()).user); }
+        else { localStorage.removeItem("token"); localStorage.removeItem("user"); showGuest(); }
+      } catch { user ? showUser(user) : showGuest(); }
+    }
+    function showGuest() {
+      document.querySelectorAll(".authGuest").forEach(e => e.style.display = "flex");
+      document.querySelectorAll(".authUser").forEach(e => e.style.display = "none");
+    }
+    function showUser(u) {
+      document.querySelectorAll(".authGuest").forEach(e => e.style.display = "none");
+      document.querySelectorAll(".authUser").forEach(e => e.style.display = "flex");
+      document.querySelectorAll(".userGreeting").forEach(e => e.textContent = "👋 " + u.first_name);
+    }
+    async function logout() {
+      try { await fetch(_API + "/auth/logout", { method: "POST", credentials: "include" }); } catch {}
+      localStorage.removeItem("token"); localStorage.removeItem("user"); showGuest();
+    }
+    checkAuth();
+  </script>
+</body>
+</html>

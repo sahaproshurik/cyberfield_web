@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Контакти — CyberField NeT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@400;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+  <style>
+    .pageHero {
+      background: linear-gradient(135deg, var(--violet-50) 0%, #fff 60%);
+      padding: 72px 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pageHero::after {
+      content: '';
+      position: absolute;
+      right: -100px; top: -120px;
+      width: 480px; height: 480px;
+      background: var(--heroBlob);
+      border-radius: 50%;
+      opacity: .45;
+      pointer-events: none;
+    }
+    .pageHeroBreadcrumb { font-family: var(--fontUI); font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    .pageHeroBreadcrumb a { color: var(--violet-600); }
+    .pageHeroBreadcrumb a:hover { text-decoration: underline; }
+    .pageHeroTitle { font-family: var(--fontHeading); font-weight: 700; font-size: clamp(36px, 5vw, 60px); letter-spacing: -0.04em; color: var(--c-text1); margin: 0 0 16px; }
+    .pageHeroDesc { font-family: var(--fontBody); font-size: 18px; line-height: 30px; color: var(--c-text2); max-width: 500px; margin: 0; }
+
+    /* ── Contact layout ── */
+    .contactLayout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .contactLayout { grid-template-columns: 1fr; } }
+
+    /* ── Form ── */
+    .contactFormWrap {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 40px;
+    }
+    @media (max-width: 560px) { .contactFormWrap { padding: 28px 22px; } }
+
+    .contactFormWrap h2 {
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .contactFormWrap > p {
+      font-family: var(--fontBody);
+      font-size: 15px;
+      color: var(--c-text3);
+      margin-bottom: 28px;
+    }
+
+    .formGroup {
+      margin-bottom: 20px;
+    }
+    .formGroup label {
+      display: block;
+      font-family: var(--fontUI);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--c-text2);
+      margin-bottom: 7px;
+    }
+    .formGroup label .req { color: var(--violet-600); margin-left: 2px; }
+
+    .formGroup input,
+    .formGroup select,
+    .formGroup textarea {
+      width: 100%;
+      font-family: var(--fontBody);
+      font-size: 16px;
+      color: var(--text);
+      background: var(--violet-50);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius3);
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+      appearance: none;
+    }
+    .formGroup input::placeholder,
+    .formGroup textarea::placeholder { color: var(--c-text4); }
+    .formGroup input:focus,
+    .formGroup select:focus,
+    .formGroup textarea:focus {
+      border-color: var(--violet-500);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(108,92,231,.12);
+    }
+    .formGroup textarea { resize: vertical; min-height: 110px; }
+
+    .formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .formRow { grid-template-columns: 1fr; } }
+
+    .formSelect {
+      position: relative;
+    }
+    .formSelect select {
+      cursor: pointer;
+    }
+    .formSelect::after {
+      content: '▾';
+      position: absolute;
+      right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .formSubmit {
+      margin-top: 8px;
+    }
+    .formSubmit .btn {
+      width: 100%;
+      padding: 15px;
+      font-size: 17px;
+      border-radius: var(--radius3);
+    }
+    .formNote {
+      font-family: var(--fontBody);
+      font-size: 13px;
+      color: var(--c-text4);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ── Success message ── */
+    .successMsg {
+      display: none;
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .successMsg .successIcon {
+      width: 64px; height: 64px;
+      background: rgba(0,195,208,.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .successMsg h3 { font-size: 22px; margin-bottom: 10px; }
+    .successMsg p { font-family: var(--fontBody); font-size: 16px; color: var(--c-text2); }
+
+    /* ── Sidebar info ── */
+    .contactSidebar { display: flex; flex-direction: column; gap: 20px; }
+
+    .contactInfoCard {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 28px;
+    }
+    .contactInfoCard h3 {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .contactItem {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .contactItem:last-child { margin-bottom: 0; }
+    .contactItemIcon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--violet-100);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contactItemText { flex: 1; }
+    .contactItemText strong {
+      display: block;
+      font-family: var(--fontUI);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--c-text3);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 3px;
+    }
+    .contactItemText a, .contactItemText p {
+      font-family: var(--fontBody);
+      font-size: 15px;
+      color: var(--c-text2);
+      line-height: 22px;
+      margin: 0;
+    }
+    .contactItemText a:hover { color: var(--violet-600); }
+
+    /* ── Social card ── */
+    .socialCard {
+      background: var(--violet-50);
+      border: 1.5px solid var(--violet-200);
+      border-radius: var(--radius2);
+      padding: 28px;
+    }
+    .socialCard h3 { font-size: 18px; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .socialLinks { display: flex; flex-direction: column; gap: 10px; }
+    .socialLink {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: #fff;
+      border-radius: var(--radius3);
+      border: 1px solid var(--line);
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .socialLink:hover { border-color: var(--violet-400); box-shadow: 0 4px 12px rgba(108,92,231,.1); }
+    .socialLink svg { flex-shrink: 0; }
+    .socialLinkLabel {
+      font-family: var(--fontUI);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--c-text1);
+    }
+    .socialLinkSub {
+      font-family: var(--fontBody);
+      font-size: 12px;
+      color: var(--c-text3);
+      margin-left: auto;
+    }
+
+    /* ── FAQ ── */
+    .faqSection {}
+    .faqList { margin-top: 44px; display: flex; flex-direction: column; gap: 12px; }
+    .faqItem {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius3);
+      overflow: hidden;
+    }
+    .faqQuestion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      gap: 16px;
+      font-family: var(--fontHeading);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--c-text1);
+      letter-spacing: -0.02em;
+      user-select: none;
+      transition: background .15s;
+    }
+    .faqQuestion:hover { background: var(--violet-50); }
+    .faqChev {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--violet-100);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      color: var(--violet-600);
+      transition: transform .2s, background .2s;
+    }
+    .faqItem.open .faqChev { transform: rotate(180deg); background: var(--violet-500); color: #fff; }
+    .faqAnswer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease, padding .3s ease;
+    }
+    .faqAnswer p {
+      padding: 0 24px 20px;
+      font-family: var(--fontBody);
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--c-text2);
+      margin: 0;
+    }
+    .faqItem.open .faqAnswer { max-height: 300px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="top">
+    <div class="container">
+      <div class="navRow">
+        <a class="brand" href="../index.html" aria-label="CyberField NeT">
+          <div class="brandLogo">
+            <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="44" height="44" style="border-radius:8px;object-fit:contain;">
+          </div>
+          <div class="brandName">
+            <strong>CyberField NeT</strong>
+            <span>Онлайн-курси IT-профессій</span>
+          </div>
+        </a>
+        <nav class="navLinks" aria-label="Навігація">
+          <a href="courses.html">Курси</a>
+          <a href="about.html">Про нас</a>
+          <a href="contacts.html" style="color:var(--violet-600)">Контакти</a>
+        </nav>
+        <div class="navActions">
+          <div class="authGuest" style="display:flex;gap:10px;align-items:center">
+            <a class="btn btn-outline" href="login.html">Увійти</a>
+            <a class="btn btn-primary" href="register.html">Реєстрація</a>
+          </div>
+          <div class="authUser" style="display:none;align-items:center;gap:12px">
+            <span class="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
+            <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
+          </div>
+
+          <button class="lang" type="button" aria-label="Змінити мову">EN <span class="chev">▾</span></button>
+        </div>
+        <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <div class="pageHero">
+      <div class="container">
+        <p class="pageHeroBreadcrumb"><a href="../index.html">Головна</a> / Контакти</p>
+        <h1 class="pageHeroTitle">Зв'язатись з нами</h1>
+        <p class="pageHeroDesc">Маєш питання про курси або хочеш записатись на консультацію? Напиши — відповімо протягом 24 годин.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM + SIDEBAR -->
+    <section class="section">
+      <div class="container">
+        <div class="contactLayout">
+
+          <!-- FORM -->
+          <div class="contactFormWrap">
+            <h2>Написати нам</h2>
+            <p>Вкажи своє ім'я та питання — наша команда зв'яжеться якнайшвидше</p>
+
+            <form id="contactForm" novalidate>
+              <div class="formRow">
+                <div class="formGroup">
+                  <label for="fname">Ім'я <span class="req">*</span></label>
+                  <input type="text" id="fname" name="fname" placeholder="Олексій" required autocomplete="given-name">
+                </div>
+                <div class="formGroup">
+                  <label for="lname">Прізвище</label>
+                  <input type="text" id="lname" name="lname" placeholder="Коваль" autocomplete="family-name">
+                </div>
+              </div>
+
+              <div class="formGroup">
+                <label for="email">Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+              </div>
+
+              <div class="formGroup">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="+380 xx xxx xx xx" autocomplete="tel">
+              </div>
+
+              <div class="formGroup">
+                <label for="course">Цікавить курс</label>
+                <div class="formSelect">
+                  <select id="course" name="course">
+                    <option value="">— Обери курс —</option>
+                    <option>Frontend-розробник</option>
+                    <option>Backend-розробник (Python)</option>
+                    <option>UI/UX Дизайнер</option>
+                    <option>Data Analyst</option>
+                    <option>Кібербезпека</option>
+                    <option>AI / Machine Learning</option>
+                    <option>Хочу консультацію</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="formGroup">
+                <label for="msg">Повідомлення <span class="req">*</span></label>
+                <textarea id="msg" name="msg" placeholder="Розкажи, звідки ти і які маєш очікування від навчання..." required></textarea>
+              </div>
+
+              <div class="formSubmit">
+                <button type="submit" class="btn btn-primary">Надіслати повідомлення</button>
+              </div>
+              <p class="formNote">Натискаючи кнопку, ти погоджуєшся з нашою <a href="#" style="color:var(--violet-600)">Політикою конфіденційності</a></p>
+            </form>
+
+            <!-- Success state -->
+            <div class="successMsg" id="successMsg">
+              <div class="successIcon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <polyline points="5,14 11,20 23,8" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Повідомлення надіслано!</h3>
+              <p>Дякуємо! Ми зв'яжемось з тобою протягом 24 годин.</p>
+            </div>
+          </div>
+
+          <!-- SIDEBAR -->
+          <div class="contactSidebar">
+
+            <div class="contactInfoCard">
+              <h3>Контактна інформація</h3>
+
+              <div class="contactItem">
+                <div class="contactItemIcon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1C5.7 1 3 3.7 3 7c0 4.5 6 10 6 10s6-5.5 6-10c0-3.3-2.7-6-6-6z" stroke="var(--violet-600)" stroke-width="1.8"/><circle cx="9" cy="7" r="2" stroke="var(--violet-600)" stroke-width="1.8"/></svg>
+                </div>
+                <div class="contactItemText">
+                  <strong>Адреса</strong>
+                  <p>Україна, онлайн<br>Юридична адреса — Київ</p>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="contactItemIcon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="var(--violet-600)" stroke-width="1.8"/><polyline points="2,4 9,11 16,4" stroke="var(--violet-600)" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="contactItemText">
+                  <strong>Email</strong>
+                  <a href="/cdn-cgi/l/email-protection#fa93949c95ba9983989f889c939f969ed4949f8e"><span class="__cf_email__" data-cfemail="a2cbccc4cde2c1dbc0c7d0c4cbc7cec68cccc7d6">[email&#160;protected]</span></a>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="contactItemIcon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h3l1.5 4-2 1.5c1 2 2.5 3.5 4.5 4.5L11.5 11l4 1.5v3C15.5 15.5 10 16 6 12 2 8 2.5 3.5 3 3z" stroke="var(--violet-600)" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="contactItemText">
+                  <strong>Telegram</strong>
+                  <a href="https://t.me/cyberpole" target="_blank" rel="noopener">@cyberpole</a>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="contactItemIcon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--violet-600)" stroke-width="1.8"/><polyline points="9,5 9,9 12,11" stroke="var(--violet-600)" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </div>
+                <div class="contactItemText">
+                  <strong>Графік підтримки</strong>
+                  <p>Пн–Пт: 9:00–20:00<br>Сб: 10:00–16:00</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="socialCard">
+              <h3>Соцмережі</h3>
+              <div class="socialLinks">
+                <a class="socialLink" href="https://www.instagram.com/cyberfield_net" target="_blank" rel="noopener">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="5" stroke="#e84393" stroke-width="2"/><circle cx="11" cy="11" r="4.5" stroke="#e84393" stroke-width="2"/><circle cx="15.5" cy="6.5" r="1.2" fill="#e84393"/></svg>
+                  <span class="socialLinkLabel">Instagram</span>
+                  <span class="socialLinkSub">@cyberfield_net</span>
+                </a>
+                <a class="socialLink" href="https://t.me/cyberpole" target="_blank" rel="noopener">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 11L20 3.5 15.5 18.5 10 13 2 11z" stroke="#0088cc" stroke-width="2" stroke-linejoin="round"/><path d="M10 13L14.5 9" stroke="#0088cc" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span class="socialLinkLabel">Telegram</span>
+                  <span class="socialLinkSub">@cyberpole</span>
+                </a>
+                <a class="socialLink" href="https://www.facebook.com/profile.php?id=61552758282863" target="_blank" rel="noopener">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M13 3H10C8.9 3 8 3.9 8 5v3H5v3h3v9h3v-9h3l.5-3H11V5.5C11 5.2 11.2 5 11.5 5H14V3h-1z" stroke="#1877f2" stroke-width="1.8"/></svg>
+                  <span class="socialLinkLabel">Facebook</span>
+                  <span class="socialLinkSub">CyberField NeT</span>
+                </a>
+                <a class="socialLink" href="https://www.linkedin.com/company/cyberfield-net/" target="_blank" rel="noopener">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="7" width="4" height="13" fill="#0a66c2"/><circle cx="4" cy="4" r="2.2" fill="#0a66c2"/><path d="M9 7h4v2.2c.7-1.4 2.3-2.2 4-2.2 2.8 0 3.5 2.3 3.5 4V20h-4v-7.8c0-.8 0-1.7-.9-1.7s-1.4.9-1.4 1.7V20H9V7z" fill="#0a66c2"/></svg>
+                  <span class="socialLinkLabel">LinkedIn</span>
+                  <span class="socialLinkSub">cyberfield-net</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faqSection" style="background:var(--violet-50)">
+      <div class="container" style="max-width:780px">
+        <h2 class="title">Часті питання</h2>
+        <p class="subtitle">Відповіді на найпоширеніші запитання</p>
+
+        <div class="faqList">
+
+          <div class="faqItem">
+            <div class="faqQuestion" onclick="toggleFaq(this)">
+              Як записатись на курс?
+              <span class="faqChev">▾</span>
+            </div>
+            <div class="faqAnswer">
+              <p>Заповни форму вище або напиши нам у Telegram. Ми відповімо і проведемо безкоштовну консультацію, де підберемо курс під твій рівень та цілі.</p>
+            </div>
+          </div>
+
+          <div class="faqItem">
+            <div class="faqQuestion" onclick="toggleFaq(this)">
+              Чи потрібні попередні знання для старту?
+              <span class="faqChev">▾</span>
+            </div>
+            <div class="faqAnswer">
+              <p>Більшість наших курсів розраховані на повних початківців. Потрібен лише комп'ютер, інтернет і бажання вчитись. Для деяких просунутих напрямів (AI/ML, Кібербезпека) базові знання Python будуть перевагою.</p>
+            </div>
+          </div>
+
+          <div class="faqItem">
+            <div class="faqQuestion" onclick="toggleFaq(this)">
+              Яка тривалість курсів і чи можна навчатись у своєму темпі?
+              <span class="faqChev">▾</span>
+            </div>
+            <div class="faqAnswer">
+              <p>Курси тривають від 3 до 6 місяців. Ти сам обираєш формат — інтенсивний ("Повний день") або гнучкий. Матеріали доступні 24/7, але рекомендуємо мінімум 10–15 годин на тиждень для стабільного прогресу.</p>
+            </div>
+          </div>
+
+          <div class="faqItem">
+            <div class="faqQuestion" onclick="toggleFaq(this)">
+              Як відбувається оплата? Чи є розстрочка?
+              <span class="faqChev">▾</span>
+            </div>
+            <div class="faqAnswer">
+              <p>Оплата разова або розстрочка без переплат на 12 місяців. Приймаємо банківські картки, ПриватБанк, Monobank. Для деяких курсів доступна оплата після першого місяця роботи ("Pay after hire").</p>
+            </div>
+          </div>
+
+          <div class="faqItem">
+            <div class="faqQuestion" onclick="toggleFaq(this)">
+              Що отримаю після закінчення курсу?
+              <span class="faqChev">▾</span>
+            </div>
+            <div class="faqAnswer">
+              <p>Сертифікат CyberField NeT, реальний проєкт у портфоліо, доступ до закритої спільноти випускників і кар'єрну підтримку: допомога з резюме, підготовка до співбесіди та рекомендації партнерам.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="container">
+      <div class="footerGrid">
+        <div class="footerBrand">
+          <div class="footerLogo">
+            <img src="/assets/images/logo.png" alt="CyberField NeT logo" width="62" height="62" style="border-radius:8px;object-fit:contain;">
+          </div>
+          <div class="footerBrandText">
+            <h3>CyberField NeT</h3>
+            <p class="footerBrandSub">Онлайн-курси IT-профессій</p>
+            <p><strong>CyberField NeT — онлайн-курси IT-профессій з практикою та підтримкою менторів.</strong><br>Вчись у своєму темпі або обирай повне занурення.</p>
+          </div>
+        </div>
+        <div class="footerCol">
+          <h4>Навчання</h4>
+          <a href="courses.html">Курси</a>
+          <a href="../index.html#format">Формат навчання</a>
+          <a href="../index.html#how">Як проходить навчання</a>
+          <a href="../index.html#who">Для кого</a>
+        </div>
+        <div class="footerCol">
+          <h4>Компанія</h4>
+          <a href="about.html">Про нас</a>
+          <a href="contacts.html">Контакти</a>
+          <a href="about.html#partners">Партнерство</a>
+        </div>
+        <div class="footerSocials">
+          <h4>Ми в соцмережах</h4>
+          <div class="socialRow">
+            <a href="https://www.facebook.com/profile.php?id=61552758282863" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 2H9C7.9 2 7 2.9 7 4v3H4v3h3v8h3v-8h2.6L13 7H10V4.5C10 4.2 10.2 4 10.5 4H13V2h-1z" fill="#080809"/></svg>
+            </a>
+            <a href="https://www.instagram.com/cyberfield_net" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="4" stroke="#080808" stroke-width="1.8"/><circle cx="10" cy="10" r="4" stroke="#080808" stroke-width="1.8"/><circle cx="14.5" cy="5.5" r="1.2" fill="#080808"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/cyberfield-net/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="7" width="4" height="11" fill="#080808"/><circle cx="4" cy="4" r="2" fill="#080808"/><path d="M9 7h3.5v2c.6-1.2 2-2 3.5-2 2.5 0 3 2 3 3.5V18h-3.5v-7c0-.7 0-1.5-.8-1.5s-1.2.8-1.2 1.5v7H9V7z" fill="#080808"/></svg>
+            </a>
+            <a href="https://t.me/cyberpole" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10L18 3 14 17 9 12 2 10z" stroke="#080808" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L13.5 8" stroke="#080808" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footerCta">
+            <p>Хочеш підібрати напрям під себе?<br>Напиши — підкажемо старт.</p>
+            <a class="btn btn-consult" href="contacts.html">Отримати консультацію</a>
+          </div>
+        </div>
+      </div>
+      <div class="footerBottom">
+        <div>© 2026 CyberField NeT. Усі права захищені.</div>
+        <div class="footerLinks">
+          <a href="#">Конфіденційність</a>
+          <a href="#">Умови</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const btn = document.getElementById('burgerBtn');
+    const navLinks = document.querySelector('.navLinks');
+    if (btn && navLinks) {
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        navLinks.classList.toggle('navLinks--open', !open);
+      });
+    }
+
+    // Contact form mock submit
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg   = document.getElementById('msg').value.trim();
+      if (!fname || !email || !msg) {
+        alert('Будь ласка, заповни обов\'язкові поля (Ім\'я, Email, Повідомлення)');
+        return;
+      }
+      this.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    });
+
+    // FAQ accordion
+    function toggleFaq(el) {
+      const item = el.close
