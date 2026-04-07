@@ -317,8 +317,6 @@
             <span class="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
             <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
           </div>
-
-          <button class="lang" type="button" aria-label="Змінити мову">EN <span class="chev">▾</span></button>
         </div>
         <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -421,7 +419,7 @@
                 </div>
                 <div class="contactItemText">
                   <strong>Адреса</strong>
-                  <p>Україна, онлайн<br>Юридична адреса — Київ</p>
+                  <p>Вінниця, Україна</p>
                 </div>
               </div>
 
@@ -435,15 +433,6 @@
                 </div>
               </div>
 
-              <div class="contactItem">
-                <div class="contactItemIcon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h3l1.5 4-2 1.5c1 2 2.5 3.5 4.5 4.5L11.5 11l4 1.5v3C15.5 15.5 10 16 6 12 2 8 2.5 3.5 3 3z" stroke="var(--violet-600)" stroke-width="1.8" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="contactItemText">
-                  <strong>Telegram</strong>
-                  <a href="https://t.me/cyberpole" target="_blank" rel="noopener">@cyberpole</a>
-                </div>
-              </div>
 
               <div class="contactItem">
                 <div class="contactItemIcon">
@@ -638,4 +627,37 @@
 
     // FAQ accordion
     function toggleFaq(el) {
-      const item = el.close
+st('.faqItem.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ── Auth state ──────────────────────────────────
+    const _API = 'http://localhost:3000/api';
+    async function checkAuth() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      if (!token || !user) { showGuest(); return; }
+      try {
+        const res = await fetch(_API + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token }, credentials: 'include' });
+        if (res.ok) { showUser((await res.json()).user); }
+        else { localStorage.removeItem('token'); localStorage.removeItem('user'); showGuest(); }
+      } catch { user ? showUser(user) : showGuest(); }
+    }
+    function showGuest() {
+      document.querySelectorAll('.authGuest').forEach(e => e.style.display = 'flex');
+      document.querySelectorAll('.authUser').forEach(e => e.style.display = 'none');
+    }
+    function showUser(u) {
+      document.querySelectorAll('.authGuest').forEach(e => e.style.display = 'none');
+      document.querySelectorAll('.authUser').forEach(e => e.style.display = 'flex');
+      document.querySelectorAll('.userGreeting').forEach(e => e.textContent = '👋 ' + u.first_name);
+    }
+    async function logout() {
+      try { await fetch(_API + '/auth/logout', { method: 'POST', credentials: 'include' }); } catch {}
+      localStorage.removeItem('token'); localStorage.removeItem('user'); showGuest();
+    }
+    checkAuth();
+  </script>
+
+</body>
+</html>
