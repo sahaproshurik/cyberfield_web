@@ -2,24 +2,21 @@ require('dotenv').config();
 
 const express      = require('express');
 const cors         = require('cors');
-const cookieParser = require('cookie-parser');
 
-const authRoutes = require('./routes/auth');
+const contactRoutes = require('./routes/contact');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ─────────────────────────────────────
 app.use(cors({
-  origin:      process.env.CLIENT_URL || 'http://localhost:5500',
-  credentials: true, // needed for cookies
+  origin: process.env.CLIENT_URL || 'http://localhost:5500',
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // ── Routes ─────────────────────────────────────────
-app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

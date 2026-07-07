@@ -308,16 +308,6 @@
           <a href="about.html">Про нас</a>
           <a href="contacts.html" style="color:var(--violet-600)">Контакти</a>
         </nav>
-        <div class="navActions">
-          <div class="authGuest" style="display:flex;gap:10px;align-items:center">
-            <a class="btn btn-outline" href="login.html">Увійти</a>
-            <a class="btn btn-primary" href="register.html">Реєстрація</a>
-          </div>
-          <div class="authUser" style="display:none;align-items:center;gap:12px">
-            <span class="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
-            <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
-          </div>
-        </div>
         <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -429,7 +419,7 @@
                 </div>
                 <div class="contactItemText">
                   <strong>Email</strong>
-                  <a href="/cdn-cgi/l/email-protection#fa93949c95ba9983989f889c939f969ed4949f8e"><span class="__cf_email__" data-cfemail="a2cbccc4cde2c1dbc0c7d0c4cbc7cec68cccc7d6">[email&#160;protected]</span></a>
+                  <p>info@cyberfield.net</p>
                 </div>
               </div>
 
@@ -600,7 +590,7 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const btn = document.getElementById('burgerBtn');
     const navLinks = document.querySelector('.navLinks');
     if (btn && navLinks) {
@@ -611,53 +601,52 @@
       });
     }
 
-    // Contact form mock submit
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Contact form submit
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      const form  = this;
       const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
       const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const course = document.getElementById('course').value;
       const msg   = document.getElementById('msg').value.trim();
       if (!fname || !email || !msg) {
         alert('Будь ласка, заповни обов\'язкові поля (Ім\'я, Email, Повідомлення)');
         return;
       }
-      this.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
+
+      const submitBtn = form.querySelector('.formSubmit .btn');
+      const originalLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Надсилання...';
+
+      try {
+        const res = await fetch('http://localhost:3000/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fname, lname, email, phone, course, msg }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Помилка надсилання');
+
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } catch (err) {
+        alert(err.message || 'Не вдалося надіслати повідомлення. Спробуй пізніше.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
     });
 
     // FAQ accordion
     function toggleFaq(el) {
-st('.faqItem.open').forEach(i => i.classList.remove('open'));
+      const item = el.closest('.faqItem');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faqItem.open').forEach(i => i.classList.remove('open'));
       if (!isOpen) item.classList.add('open');
     }
-
-    // ── Auth state ──────────────────────────────────
-    const _API = 'http://localhost:3000/api';
-    async function checkAuth() {
-      const token = localStorage.getItem('token');
-      const user = JSON.parse(localStorage.getItem('user') || 'null');
-      if (!token || !user) { showGuest(); return; }
-      try {
-        const res = await fetch(_API + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token }, credentials: 'include' });
-        if (res.ok) { showUser((await res.json()).user); }
-        else { localStorage.removeItem('token'); localStorage.removeItem('user'); showGuest(); }
-      } catch { user ? showUser(user) : showGuest(); }
-    }
-    function showGuest() {
-      document.querySelectorAll('.authGuest').forEach(e => e.style.display = 'flex');
-      document.querySelectorAll('.authUser').forEach(e => e.style.display = 'none');
-    }
-    function showUser(u) {
-      document.querySelectorAll('.authGuest').forEach(e => e.style.display = 'none');
-      document.querySelectorAll('.authUser').forEach(e => e.style.display = 'flex');
-      document.querySelectorAll('.userGreeting').forEach(e => e.textContent = '👋 ' + u.first_name);
-    }
-    async function logout() {
-      try { await fetch(_API + '/auth/logout', { method: 'POST', credentials: 'include' }); } catch {}
-      localStorage.removeItem('token'); localStorage.removeItem('user'); showGuest();
-    }
-    checkAuth();
-  </script>
 
 </body>
 </html>

@@ -42,20 +42,6 @@
           <a href="pages/contacts.html">Контакти</a>
         </nav>
 
-        <div class="navActions">
-          <!-- Auth buttons — показуються динамічно через JS -->
-          <div id="authGuest" style="display:flex;gap:10px;align-items:center">
-            <a class="btn btn-outline" href="pages/login.html">Увійти</a>
-            <a class="btn btn-primary" href="pages/register.html">Реєстрація</a>
-          </div>
-
-          <!-- Показується коли залогінений -->
-          <div id="authUser" style="display:none;align-items:center;gap:12px">
-            <span id="userGreeting" style="font-family:var(--fontUI);font-size:15px;font-weight:500;color:var(--c-text2)"></span>
-            <button onclick="logout()" class="btn btn-outline" style="font-size:15px;padding:9px 18px">Вийти</button>
-          </div>
-        </div>
-
         <!-- [CHANGE] Мобільний бургер-тогл -->
         <button class="burgerBtn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -620,67 +606,6 @@
         navLinks.classList.toggle('navLinks--open', !open);
       });
     }
-  </script>
-
-  <script>
-    // ── Auth state ──────────────────────────────────
-    const API = 'http://localhost:3000/api';
-
-    async function checkAuth() {
-      const token = localStorage.getItem('token');
-      const user  = JSON.parse(localStorage.getItem('user') || 'null');
-
-      if (!token || !user) {
-        showGuest();
-        return;
-      }
-
-      // Verify token is still valid
-      try {
-        const res = await fetch(`${API}/auth/me`, {
-          headers: { 'Authorization': `Bearer ${token}` },
-          credentials: 'include',
-        });
-        if (res.ok) {
-          const data = await res.json();
-          showUser(data.user);
-        } else {
-          // Token expired — clean up
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          showGuest();
-        }
-      } catch {
-        // Server offline — show based on localStorage
-        user ? showUser(user) : showGuest();
-      }
-    }
-
-    function showGuest() {
-      document.getElementById('authGuest').style.display = 'flex';
-      document.getElementById('authUser').style.display  = 'none';
-    }
-
-    function showUser(user) {
-      document.getElementById('authGuest').style.display = 'none';
-      document.getElementById('authUser').style.display  = 'flex';
-      document.getElementById('userGreeting').textContent =
-        `👋 ${user.first_name}`;
-    }
-
-    async function logout() {
-      try {
-        await fetch(`${API}/auth/logout`, {
-          method: 'POST',
-          credentials: 'include',
-        });
-      } catch {}
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      showGuest();
-    }
-
-    checkAuth();
   </script>
 
 </body>
