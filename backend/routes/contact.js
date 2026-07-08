@@ -13,15 +13,17 @@ const contactLimiter = rateLimit({
 });
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false, // для порта 587 secure должно быть FALSE
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
-  connectionTimeout: 10000, // 10 секунд и падаем по тайм-ауту (НЕ ЗАВИСАЕМ!)
+  tls: {
+    rejectUnauthorized: false // Игнорируем проблемы с сертификатами хостинга, если они есть
+  },
+  connectionTimeout: 10000,
 });
 
 router.post(
