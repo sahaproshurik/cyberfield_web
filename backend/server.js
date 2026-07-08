@@ -1,10 +1,11 @@
 const path = require('path');
+// На Render файлы из .env берутся из панели управления, но эту строчку оставляем для локалки
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 console.log("--- DEBUG START ---");
 console.log("Current Directory:", __dirname);
-console.log("Loaded DB_USER:", process.env.DB_USER);
 console.log("--- DEBUG END ---");
+
 const express      = require('express');
 const cors         = require('cors');
 
@@ -14,13 +15,27 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ─────────────────────────────────────
+// НАСТРОЙКА CORS: Разрешаем запросы и с локалки, и с твоего GitHub Pages
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5500',
+  origin: [
+    'http://localhost:63342',
+    'http://localhost:5500',
+    'https://sahaproshurik.github.io'
+  ],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ── Routes ─────────────────────────────────────────
+
+// Главный роут (GET /), чтобы Render при проверке и ты в браузере видели, что всё ок
+app.get('/', (req, res) => {
+  res.send('🚀 Сервер CyberField Net успешно запущен и работает!');
+});
+
 app.use('/api/contact', contactRoutes);
 
 // Health check
@@ -41,5 +56,5 @@ app.use((err, req, res, next) => {
 
 // ── Start ──────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
