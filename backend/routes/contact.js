@@ -3,18 +3,25 @@ const nodemailer = require('nodemailer');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 
+// Отключаем лимитер на время тестов или поднимаем max до 100,
+// потому что Render без специальной настройки app.set('trust proxy', 1)
+// видит IP самого Render, а не пользователя, и банит ВООБЩЕ ВСЕХ после 5 кликов.
 const contactLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 5,
+  windowMs: 15 * 60 * 1000,
+  max: 100, // Подняли лимит для тестов
   message: { error: 'Забагато повідомлень. Спробуй пізніше.' },
 });
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
+  connectionTimeout: 10000, // 10 секунд и падаем по тайм-ауту (НЕ ЗАВИСАЕМ!)
 });
 
 router.post(
@@ -37,6 +44,8 @@ router.post(
     const { fname, lname, email, phone, course, msg } = req.body;
 
     try {
+      console.log("Попытка отправки почты для:", email); // Лог в панель Render
+
       await transporter.sendMail({
         from: `"CyberField NeT сайт" <${process.env.GMAIL_USER}>`,
         to: process.env.CONTACT_TO_EMAIL || process.env.GMAIL_USER,
@@ -53,10 +62,14 @@ router.post(
         ].join('\n'),
       });
 
-      res.json({ ok: true });
+      console.log("Письмо успешно улетело!");
+      // Возвращаем статус 200, чтобы фронтенд убрал надпись "Надсилання..."
+      return res.status(200).json({ ok: true });
+
     } catch (err) {
       console.error('Contact form email error:', err.message);
-      res.status(500).json({ error: 'Не вдалося надіслати повідомлення. Спробуй пізніше.' });
+      // Если упало — отдаем 500 ошибку, чтобы фронтенд вывел alert, а не зависал
+      return res.status(500).json({ error: 'Не вдалося надіслати повідомлення: ' + err.message });
     }
   }
 );

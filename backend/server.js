@@ -12,6 +12,7 @@ const cors         = require('cors');
 const contactRoutes = require('./routes/contact');
 
 const app  = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ─────────────────────────────────────
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Главный роут (GET /), чтобы Render при проверке и ты в браузере видели, что всё ок
 app.get('/', (req, res) => {
-  res.send('🚀 Сервер CyberField Net успешно запущен и работает!');
+  res.send('🚀 Сервер CyberField Net');
 });
 
 app.use('/api/contact', contactRoutes);
