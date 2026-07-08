@@ -1,5 +1,10 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
+console.log("--- DEBUG START ---");
+console.log("Current Directory:", __dirname);
+console.log("Loaded DB_USER:", process.env.DB_USER);
+console.log("--- DEBUG END ---");
 const express      = require('express');
 const cors         = require('cors');
 
