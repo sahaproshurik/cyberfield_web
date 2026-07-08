@@ -1,9 +1,6 @@
 const router  = require('express').Router();
-const { Resend } = require('resend'); // Подключаем Resend вместо nodemailer
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -30,36 +27,44 @@ router.post(
 
     const { fname, lname, email, phone, course, msg } = req.body;
 
-    try {
-      console.log("Попытка отправки через Resend API...");
+    // Форматируем красивый текст для Telegram
+    const telegramMessage = [
+      `🚀 *Нова заявка з сайту CyberField*`,
+      `━━━━━━━━━━━━━━━━━━`,
+      `👤 *Ім'я:* ${fname} ${lname || ''}`,
+      `📧 *Email:* ${email}`,
+      `📞 *Телефон:* ${phone || '—'}`,
+      `📚 *Курс:* ${course || '—'}`,
+      `💬 *Повідомлення:*`,
+      `${msg}`
+    ].join('\n');
 
-      // На бесплатном тарифе Resend без своего домена отправлять можно
-      // СТРОГО с адреса 'onboarding@resend.dev' и СТРОГО на свою же личную почту.
-      const { data, error } = await resend.emails.send({
-        from: 'CyberField Сайт <onboarding@resend.dev>',
-        to: process.env.CONTACT_TO_EMAIL || 'твоя-почта@gmail.com', // Подставь свою почту или возьмет из Render
-        replyTo: email,
-        subject: `Нове повідомлення від ${fname} ${lname || ''}`,
-        text: [
-          `Ім'я: ${fname} ${lname || ''}`,
-          `Email: ${email}`,
-          `Телефон: ${phone || '—'}`,
-          `Курс: ${course || '—'}`,
-          '',
-          'Повідомлення:',
-          msg,
-        ].join('\n'),
+    try {
+      const token = process.env.TELEGRAM_BOT_TOKEN;
+      const chatId = process.env.TELEGRAM_CHAT_ID;
+
+      // Шлем обычный POST запрос на сервера Telegram API
+      const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: telegramMessage,
+          parse_mode: 'Markdown' // Делает текст жирным и красивым
+        })
       });
 
-      if (error) {
-        throw new Error(error.message);
+      const telegramData = await response.json();
+
+      if (!telegramData.ok) {
+        throw new Error(telegramData.description || 'Помилка Telegram API');
       }
 
-      console.log("Письмо успешно улетело через API!", data);
+      console.log("Заявка успешно улетела в Telegram!");
       return res.status(200).json({ ok: true });
 
     } catch (err) {
-      console.error('Resend API error:', err.message);
+      console.error('Telegram send error:', err.message);
       return res.status(500).json({ error: 'Не вдалося надіслати повідомлення: ' + err.message });
     }
   }
