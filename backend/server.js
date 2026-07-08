@@ -22,10 +22,10 @@ app.use(cors({
     'http://localhost:5500',
     'https://sahaproshurik.github.io'
   ],
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
-
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
