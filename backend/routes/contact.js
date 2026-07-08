@@ -1,31 +1,14 @@
 const router  = require('express').Router();
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend'); // Подключаем Resend вместо nodemailer
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 
-// Отключаем лимитер на время тестов или поднимаем max до 100,
-// потому что Render без специальной настройки app.set('trust proxy', 1)
-// видит IP самого Render, а не пользователя, и банит ВООБЩЕ ВСЕХ после 5 кликов.
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100, // Подняли лимит для тестов
+  max: 100,
   message: { error: 'Забагато повідомлень. Спробуй пізніше.' },
-});
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // Для порта 587 secure должно быть строго FALSE
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD, // 16 букв без пробелов
-  },
-  tls: {
-    // Этот блок заставляет Nodemailer игнорировать внутренние ограничения сети Render
-    rejectUnauthorized: false,
-    minVersion: 'TLSv1.2'
-  },
-  connectionTimeout: 10000, // Оставляем тайм-аут, чтобы не вешать сервер
 });
 
 router.post(
@@ -48,13 +31,15 @@ router.post(
     const { fname, lname, email, phone, course, msg } = req.body;
 
     try {
-      console.log("Попытка отправки почты для:", email); // Лог в панель Render
+      console.log("Попытка отправки через Resend API...");
 
-      await transporter.sendMail({
-        from: `"CyberField NeT сайт" <${process.env.GMAIL_USER}>`,
-        to: process.env.CONTACT_TO_EMAIL || process.env.GMAIL_USER,
+      // На бесплатном тарифе Resend без своего домена отправлять можно
+      // СТРОГО с адреса 'onboarding@resend.dev' и СТРОГО на свою же личную почту.
+      const { data, error } = await resend.emails.send({
+        from: 'CyberField Сайт <onboarding@resend.dev>',
+        to: process.env.CONTACT_TO_EMAIL || 'твоя-почта@gmail.com', // Подставь свою почту или возьмет из Render
         replyTo: email,
-        subject: `Нове повідомлення з сайту від ${fname} ${lname || ''}`.trim(),
+        subject: `Нове повідомлення від ${fname} ${lname || ''}`,
         text: [
           `Ім'я: ${fname} ${lname || ''}`,
           `Email: ${email}`,
@@ -66,13 +51,15 @@ router.post(
         ].join('\n'),
       });
 
-      console.log("Письмо успешно улетело!");
-      // Возвращаем статус 200, чтобы фронтенд убрал надпись "Надсилання..."
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log("Письмо успешно улетело через API!", data);
       return res.status(200).json({ ok: true });
 
     } catch (err) {
-      console.error('Contact form email error:', err.message);
-      // Если упало — отдаем 500 ошибку, чтобы фронтенд вывел alert, а не зависал
+      console.error('Resend API error:', err.message);
       return res.status(500).json({ error: 'Не вдалося надіслати повідомлення: ' + err.message });
     }
   }
